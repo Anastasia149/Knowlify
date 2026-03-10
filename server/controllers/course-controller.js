@@ -53,6 +53,16 @@ class CourseController {
             next(e);
         }
     }
+
+    async deleteCourse(req, res, next) {
+        try {
+            const { id } = req.params;
+            await courseService.deleteCourse(id);
+            return res.status(200).json({ message: 'Курс удален' });
+        } catch (e) {
+            next(e);
+        }
+    }
 }
 
 module.exports = new CourseController();

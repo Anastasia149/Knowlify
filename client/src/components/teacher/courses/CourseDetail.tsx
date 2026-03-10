@@ -51,6 +51,15 @@ const CourseDetail: React.FC = () => {
   const hasOrphanLessons = (course?.lessons?.length ?? 0) > 0;
   const isCourseEmpty = !hasVisibleModules && !hasOrphanLessons;
 
+  const handleDelete = async () => {
+    if (window.confirm('Вы уверены, что хотите удалить этот курс? Все уроки и материалы будут удалены безвозвратно.')) {
+      if (id) {
+        await store.deleteCourse(Number(id));
+        navigate('/teacher/courses');
+      }
+    }
+  };
+
   if (loading) {
     return <div>Загрузка...</div>; 
   }
@@ -148,7 +157,7 @@ const CourseDetail: React.FC = () => {
                 <div className="settings-section">
                   <h4>Управление курсом</h4>
                   <button className="lesson-action-btn edit" onClick={() => navigate(`/teacher/course/${id}/edit`)}>Редактировать курс</button>
-                  <button className="lesson-action-btn delete">Удалить курс</button>
+                  <button className="lesson-action-btn delete" onClick={handleDelete}>Удалить курс</button>
                 </div>
                 <div className="settings-section">
                   <h4>Управление учениками</h4>

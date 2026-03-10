@@ -99,6 +99,10 @@ class CourseService {
         );
         return updatedCourse.rows[0];
     }
+
+    async deleteCourse(id) {
+        await pool.query(`DELETE FROM courses WHERE id = $1`, [id]);
+    }
 }
 
 module.exports = new CourseService();

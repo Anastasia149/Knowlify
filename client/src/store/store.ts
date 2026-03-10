@@ -148,6 +148,14 @@ export default class Store {
         }
     }
 
+    async deleteCourse(id: number): Promise<void> {
+        try {
+            await $api.delete(`/courses/${id}`);
+        } catch (e) {
+            console.log("FULL ERROR:", e);
+        }
+    }
+
     async createModule(courseId: string, title: string): Promise<Module | undefined> {
         try {
             const response = await $api.post<Module>(`/courses/${courseId}/modules`, { title });
