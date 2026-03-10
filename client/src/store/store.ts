@@ -108,6 +108,15 @@ export default class Store {
         }
     }
 
+    async getAllCourses() {
+        try {
+            const response = await $api.get<ICourse[]>('/courses');
+            this.setCourses(response.data);
+        } catch (e) {
+            console.log("FULL ERROR:", e);
+        }
+    }
+
     async getCourseDetails(id: number): Promise<CourseDetails | undefined> {
         try {
             const response = await $api.get<CourseDetails>(`/teacher/course/${id}`);

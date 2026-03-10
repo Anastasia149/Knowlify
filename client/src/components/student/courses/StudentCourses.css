@@ -1,0 +1,134 @@
+.student-courses-page {
+  padding: 24px;
+}
+
+.courses-promo-banner {
+  background-color: #7c3aed; /* purple-600 */
+  border-radius: 16px;
+  padding: 32px;
+  color: white;
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.promo-text h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+}
+
+.promo-text p {
+  font-size: 1rem;
+  margin: 0;
+  opacity: 0.9;
+}
+
+.promo-stats {
+  display: flex;
+  gap: 40px;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-item .count {
+  font-size: 2.25rem;
+  font-weight: 700;
+}
+
+.stat-item .label {
+  font-size: 0.875rem;
+  opacity: 0.8;
+}
+
+.courses-filter-panel {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.filter-button {
+  background-color: #f3f4f6; /* gray-100 */
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.filter-button.active {
+  background-color: #4f46e5; /* indigo-600 */
+  color: white;
+}
+
+.filter-button:hover {
+  background-color: #e5e7eb; /* gray-200 */
+}
+
+.filter-button.active:hover {
+  background-color: #4338ca; /* indigo-700 */
+}
+
+/* Стили для карточки курса, адаптированные под новый дизайн */
+.student-course-card {
+  background-color: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.student-course-card-img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+
+.student-course-card-info {
+  padding: 16px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.student-course-card-info h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+}
+
+.student-course-rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #f59e0b; /* amber-500 */
+  margin-bottom: 12px;
+}
+
+.student-course-author {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+  color: #6b7280; /* gray-500 */
+  margin-top: auto; /* Прижимает автора и цену к низу */
+}
+
+.student-course-author .author-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #e5e7eb; /* gray-200 */
+}
+
+.student-course-price {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #4f46e5; /* indigo-600 */
+  margin-left: auto;
+}

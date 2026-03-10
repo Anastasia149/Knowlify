@@ -8,6 +8,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import StudentCalendar from './components/StudentCalendar';
 import StudentSchedule from './components/StudentSchedule';
 import ScheduleHome from '../schedule/ScheduleHome';
+import StudentCourses from '../courses/StudentCourses';
 
 const StudentHome: React.FC = () => {
   const { store } = useContext(Context);
@@ -24,7 +25,12 @@ const StudentHome: React.FC = () => {
       <StudentSidebar />
       <main className="student-content">
         <StudentHeader name={store.user?.name} tab={tab} />
-        {tab === 'schedule' ? (
+        {tab === 'search' ? (
+          <>
+            <div className="student-section-title">Курсы</div>
+            <StudentCourses />
+          </>
+        ) : tab === 'schedule' ? (
           <ScheduleHome />
         ) : tab === 'settings' ? (
           <section className="student-calendar">

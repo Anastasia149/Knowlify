@@ -16,6 +16,11 @@ class CourseService {
         return courses.rows;
     }
 
+    async getAllPublishedCourses() {
+        const courses = await pool.query("SELECT * FROM courses WHERE status = 'published'");
+        return courses.rows;
+    }
+
     async getCourseDetails(courseId) {
         const query = `
             SELECT 

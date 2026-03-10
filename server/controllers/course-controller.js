@@ -33,6 +33,15 @@ class CourseController {
         }
     }
 
+    async getAllPublishedCourses(req, res, next) {
+        try {
+            const courses = await courseService.getAllPublishedCourses();
+            return res.json(courses);
+        } catch (e) {
+            next(e);
+        }
+    }
+
     async getCourseDetails(req, res, next) {
         try {
             const { id } = req.params;

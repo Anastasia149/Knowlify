@@ -17,6 +17,7 @@ import EditLesson from './components/teacher/lessons/EditLesson';
 import EditCourse from './components/teacher/courses/EditCourse';
 import Loader from './components/common/Loader';
 import NotFound from './components/common/NotFound';
+import StudentCourses from './components/student/courses/StudentCourses';
 
 function App() {
   const {store} = useContext(Context);
@@ -37,6 +38,7 @@ function App() {
       <Routes>
           <Route path="/" element={store.isAuth ? <Navigate to={isStudent ? "/student" : "/teacher"} replace /> : <HomePage />} />
           <Route path="/student" element={isStudent ? <StudentHome /> : <Navigate to="/" replace />} />
+
           <Route path="/teacher" element={isTeacher ? <TeacherHome /> : <Navigate to="/" replace />} />
           <Route path="/teacher/courses" element={isTeacher ? <TeacherCourses /> : <Navigate to="/" replace />} />
           <Route path="/teacher/create-course" element={isTeacher ? <CreateCourse /> : <Navigate to="/" replace />} />
