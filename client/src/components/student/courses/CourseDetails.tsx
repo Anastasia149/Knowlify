@@ -45,23 +45,23 @@ const CourseDetails: React.FC = () => {
 
   return (
     <div className="course-details-page">
-      <div className="course-details-main">
-        <h2>{course.title}</h2>
-        <img src={course.image_url} alt={course.title} className="course-details-image" />
-        
-        <div className="course-details-tabs">
-            <button className="tab-button active">Описание</button>
-            <button className="tab-button">Инструменты</button>
-            <button className="tab-button">Отзывы</button>
-            <button className="tab-button">Сокурсники</button>
+      <div className="course-details-left-col">
+        <div className="course-content-panel">
+          <h2>{course.title}</h2>
+          <img src={course.image_url} alt={course.title} className="course-details-image" />
+          <div className="course-details-tabs">
+              <button className="tab-button active">Описание</button>
+              <button className="tab-button">Инструменты</button>
+              <button className="tab-button">Отзывы</button>
+              <button className="tab-button">Сокурсники</button>
+          </div>
+          <div className="course-details-tab-content">
+              <p>{course.description}</p>
+          </div>
         </div>
-
-        <div className="course-details-tab-content">
-            <p>{course.description}</p>
-        </div>
-
       </div>
-      <div className="course-details-sidebar">
+
+      <div className="course-details-right-col">
         <div className="course-overview-card">
             <h4>Обзор</h4>
             <div className="overview-grid">
@@ -80,7 +80,7 @@ const CourseDetails: React.FC = () => {
             </div>
             <div className="price-section">
                 <h4>Цена</h4>
-                <p>¥{course.price}</p>
+                <p>{course.price}$</p>
             </div>
             <button className="add-to-cart-button">Добавить в корзину</button>
         </div>
@@ -88,9 +88,9 @@ const CourseDetails: React.FC = () => {
         <div className="mentor-card">
             <h4>О менторе</h4>
             <div className="mentor-info">
-                <img src={mentor.avatar} alt={mentor.name} />
+                <img src={mentor.avatar} alt={course.author_name} />
                 <div>
-                    <h5>{mentor.name}</h5>
+                    <h5>{course.author_name}</h5>
                     <p>{mentor.role}</p>
                 </div>
             </div>
@@ -99,7 +99,6 @@ const CourseDetails: React.FC = () => {
                 <span>{mentor.rating}/5 ({mentor.reviewsCount} отзывов)</span>
             </div>
         </div>
-
       </div>
     </div>
   );

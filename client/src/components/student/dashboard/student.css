@@ -72,6 +72,7 @@
   border: none;
   cursor: pointer;
   color: #111;
+  outline: none;
 }
 .student-icon-btn svg { width: 28px; height: 28px; }
 .student-icon-btn:hover { color: #4b5563; }

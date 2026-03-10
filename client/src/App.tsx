@@ -17,6 +17,7 @@ import EditLesson from './components/teacher/lessons/EditLesson';
 import EditCourse from './components/teacher/courses/EditCourse';
 import Loader from './components/common/Loader';
 import NotFound from './components/common/NotFound';
+import ScheduleHome from './components/student/schedule/ScheduleHome';
 import StudentLayout from './components/student/dashboard/StudentLayout';
 import StudentCourses from './components/student/courses/StudentCourses';
 import CourseDetails from './components/student/courses/CourseDetails';
@@ -42,6 +43,7 @@ function App() {
           <Route path="/student" element={isStudent ? <StudentLayout /> : <Navigate to="/" replace />}>
             <Route index element={<StudentHome />} />
             <Route path="courses" element={<StudentCourses />} />
+            <Route path="schedule" element={<ScheduleHome />} />
             <Route path="course/:id" element={<CourseDetails />} />
           </Route>
 

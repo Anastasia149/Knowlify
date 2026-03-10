@@ -69,7 +69,7 @@ const StudentCourses: React.FC = () => {
                   </div>
                   <div className="student-course-author">
                     <div className="author-icon"></div>
-                    <span>Автор курса</span>
+                    <span>{course.author_name}</span>
                     <span className="student-course-price">{course.price} $</span>
                   </div>
                 </div>

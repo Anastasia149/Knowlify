@@ -17,12 +17,12 @@ class CourseService {
     }
 
     async getAllPublishedCourses() {
-        const courses = await pool.query("SELECT * FROM courses WHERE status = 'published'");
+        const courses = await pool.query("SELECT c.*, u.name as author_name FROM courses c JOIN users u ON c.author_id = u.id WHERE c.status = 'published'");
         return courses.rows;
     }
 
     async getCourseById(courseId) {
-        const course = await pool.query('SELECT c.*, COUNT(DISTINCT l.id) AS lessons_count FROM courses c LEFT JOIN lessons l ON c.id = l.course_id WHERE c.id = $1 GROUP BY c.id', [courseId]);
+        const course = await pool.query('SELECT c.*, u.name as author_name, COUNT(DISTINCT l.id) AS lessons_count FROM courses c JOIN users u ON c.author_id = u.id LEFT JOIN lessons l ON c.id = l.course_id WHERE c.id = $1 GROUP BY c.id, u.name', [courseId]);
         return course.rows[0];
     }
 
