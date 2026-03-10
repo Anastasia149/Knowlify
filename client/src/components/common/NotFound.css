@@ -1,0 +1,92 @@
+.not-found-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  background-color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  text-align: center;
+  padding: 15vh 20px 20px;
+  box-sizing: border-box;
+}
+
+.not-found-illustration {
+  width: 100%;
+  max-width: 490px; /* Уменьшил размер */
+  margin-bottom: 20px;
+}
+
+.not-found-box {
+  display: none; /* Скрываем старую рамку */
+}
+
+.tape {
+  position: absolute;
+  width: 120px;
+  height: 30px;
+  background-color: #fef08a; /* Желтый цвет скотча */
+  border-left: 2px dashed rgba(0,0,0,0.1);
+  border-right: 2px dashed rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.tape.top-left {
+  top: -15px;
+  left: -30px;
+  transform: rotate(-45deg);
+}
+
+.tape.top-right {
+  top: -15px;
+  right: -30px;
+  transform: rotate(45deg);
+}
+
+.tape.bottom-left {
+  bottom: -15px;
+  left: -30px;
+  transform: rotate(45deg);
+}
+
+.not-found-text {
+  font-size: 12rem;
+  font-weight: 800;
+  color: #111827;
+  line-height: 1;
+}
+
+.not-found-message h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 16px;
+}
+
+.not-found-message p {
+  font-size: 1.125rem;
+  color: #6b7280;
+  margin-bottom: 32px;
+}
+
+.not-found-home-link {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: #4f46e5;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.not-found-home-link:hover {
+  background-color: #4338ca;
+}
+
+/* Placeholder for the cat illustration */
+.cat-placeholder {
+  font-size: 5rem;
+  margin-bottom: -20px;
+  z-index: 10;
+  position: relative;
+}

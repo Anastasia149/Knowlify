@@ -15,6 +15,8 @@ import CreateLesson from './components/teacher/courses/CreateLesson';
 import LessonDetail from './components/teacher/lessons/LessonDetail';
 import EditLesson from './components/teacher/lessons/EditLesson';
 import EditCourse from './components/teacher/courses/EditCourse';
+import Loader from './components/common/Loader';
+import NotFound from './components/common/NotFound';
 
 function App() {
   const {store} = useContext(Context);
@@ -24,7 +26,7 @@ function App() {
   }, [])
 
   if(store.isLoading){
-    return <div>Загрузка...</div>
+    return <Loader size="full-page" />
   }
 
   const isStudent = store.isAuth && store.user?.role === 'student';
@@ -45,6 +47,7 @@ function App() {
           <Route path="/teacher/lesson/:lessonId/edit" element={isTeacher ? <EditLesson /> : <Navigate to="/" replace />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/register" element={<RegistrationForm />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
     </BrowserRouter>
   );

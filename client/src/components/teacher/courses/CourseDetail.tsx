@@ -9,6 +9,7 @@ import '../dashboard/teacher.css';
 import './courses.css';
 
 import { CourseDetails } from '../../../models/ICourseDetail';
+import Loader from '../../common/Loader';
 
 const CourseDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -61,7 +62,14 @@ const CourseDetail: React.FC = () => {
   };
 
   if (loading) {
-    return <div>Загрузка...</div>; 
+    return (
+      <div className="teacher-layout">
+        <TeacherSidebar />
+        <main className="teacher-content">
+          <Loader size="inline" />
+        </main>
+      </div>
+    );
   }
 
   return (
