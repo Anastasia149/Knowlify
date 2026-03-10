@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Context } from '../index';
 import { observer } from 'mobx-react-lite';
 import { Icon } from '@iconify/react';
@@ -27,9 +27,15 @@ const LoginForm: React.FC = () => {
 
   
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [error, setError] = useState('');
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    store.login(fields.email, fields.password);
+    try {
+      await store.login(fields.email, fields.password);
+    } catch (err) {
+      setError('Неверный логин или пароль!');
+    }
   };
 
   return (
@@ -89,6 +95,7 @@ const LoginForm: React.FC = () => {
                   required
                 />
               </label>
+              {error && <div className="auth-error-message">{error}</div>}
 
               <div className="auth-forgot-row">
                 <button type="button" className="auth-link-button">

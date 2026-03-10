@@ -223,6 +223,15 @@
   color: #ef4444;
 }
 
+.auth-error-message {
+  color: #ef4444; /* red-500 */
+  font-size: 0.875rem;
+  text-align: left;
+  margin-top: -0.45rem; /* Сделал отступ чуть меньше */
+  margin-bottom: 1rem;
+  padding-left: 0.5rem;
+}
+
 .auth-submit-button {
   margin-top: 4px;
   height: 46px;
