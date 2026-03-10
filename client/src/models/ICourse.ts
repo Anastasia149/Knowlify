@@ -5,4 +5,6 @@ export interface ICourse {
     image_url?: string;
     status: 'draft' | 'published';
     price: number;
+    students_count?: number;
+    lessons_count?: number;
 }

@@ -132,3 +132,8 @@
   color: #4f46e5; /* indigo-600 */
   margin-left: auto;
 }
+
+.student-course-card-link {
+  text-decoration: none;
+  color: inherit;
+}

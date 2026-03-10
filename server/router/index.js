@@ -22,6 +22,7 @@ router.get('/activate/:link', userController.activation);
 router.get('/users', authMiddleware, userController.getUsers);
 router.post('/courses', authMiddleware, courseController.createCourse);
 router.get('/courses', authMiddleware, courseController.getAllPublishedCourses);
+router.get('/courses/:id', courseController.getCourseById);
 router.put('/courses/:id', authMiddleware, courseController.updateCourse);
 router.delete('/courses/:id', authMiddleware, courseController.deleteCourse);
 router.get('/teacher/courses', authMiddleware, courseController.getTeacherCourses);

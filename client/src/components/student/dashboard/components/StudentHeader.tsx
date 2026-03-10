@@ -1,29 +1,36 @@
 import React, { useContext } from 'react';
 import { Icon } from '@iconify/react';
 import '../student.css';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Context } from '../../../../index';
 
 type Props = {
   name?: string;
-  tab?: string;
 };
 
-const StudentHeader: React.FC<Props> = ({ name, tab }) => {
+const StudentHeader: React.FC<Props> = ({ name }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   useContext(Context);
 
-  const openSettings = () => navigate('/student?tab=settings');
+  const getTitle = () => {
+    const path = location.pathname;
+    if (path.startsWith('/student/courses')) return 'Поиск';
+    if (path.startsWith('/student/course')) return 'Детали курса';
+    if (path.startsWith('/student/schedule')) return 'Расписание';
+    if (path.startsWith('/student/settings')) return 'Настройки';
+    return 'Главная';
+  };
+
+  const title = getTitle();
+
+  const openSettings = () => navigate('/student/settings');
   return (
     <div className="student-header">
       <div className="student-header-title">
-        {tab === 'schedule' ? (
-          <div className="student-hello">Расписание</div>
-        ) : (
-          <>
-            <div className="student-hello">Добро пожаловать{name ? `, ${name}!` : '!'}</div>
-            <div className="student-hello-sub">Продолжайте заниматься</div>
-          </>
+        <div className="student-hello">{title}</div>
+        {title === 'Главная' && (
+          <div className="student-hello-sub">Добро пожаловать{name ? `, ${name}!` : '!'}</div>
         )}
       </div>
       <div className="student-header-actions">

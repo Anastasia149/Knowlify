@@ -19,6 +19,8 @@
    background: transparent;
    border: none;
    cursor: pointer;
+   text-decoration: none;
+   color: #111827;
  }
  .student-brand-icon { width: 26px; height: 26px; color: #7b5cff; }
 .student-brand-text { font-weight: 800; font-size: 20px; }
@@ -42,6 +44,7 @@
    color: #A0A0A0;
    text-align: left;
    transition: color .15s ease;
+   text-decoration: none;
  }
  .student-nav-item:hover,
  .student-nav-item:focus { color: #8173DA; }

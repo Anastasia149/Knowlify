@@ -42,6 +42,16 @@ class CourseController {
         }
     }
 
+    async getCourseById(req, res, next) {
+        try {
+            const { id } = req.params;
+            const course = await courseService.getCourseById(id);
+            return res.json(course);
+        } catch (e) {
+            next(e);
+        }
+    }
+
     async getCourseDetails(req, res, next) {
         try {
             const { id } = req.params;

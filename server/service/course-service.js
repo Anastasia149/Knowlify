@@ -21,6 +21,11 @@ class CourseService {
         return courses.rows;
     }
 
+    async getCourseById(courseId) {
+        const course = await pool.query('SELECT c.*, COUNT(DISTINCT l.id) AS lessons_count FROM courses c LEFT JOIN lessons l ON c.id = l.course_id WHERE c.id = $1 GROUP BY c.id', [courseId]);
+        return course.rows[0];
+    }
+
     async getCourseDetails(courseId) {
         const query = `
             SELECT 

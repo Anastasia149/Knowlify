@@ -17,7 +17,9 @@ import EditLesson from './components/teacher/lessons/EditLesson';
 import EditCourse from './components/teacher/courses/EditCourse';
 import Loader from './components/common/Loader';
 import NotFound from './components/common/NotFound';
+import StudentLayout from './components/student/dashboard/StudentLayout';
 import StudentCourses from './components/student/courses/StudentCourses';
+import CourseDetails from './components/student/courses/CourseDetails';
 
 function App() {
   const {store} = useContext(Context);
@@ -37,7 +39,11 @@ function App() {
     <BrowserRouter>
       <Routes>
           <Route path="/" element={store.isAuth ? <Navigate to={isStudent ? "/student" : "/teacher"} replace /> : <HomePage />} />
-          <Route path="/student" element={isStudent ? <StudentHome /> : <Navigate to="/" replace />} />
+          <Route path="/student" element={isStudent ? <StudentLayout /> : <Navigate to="/" replace />}>
+            <Route index element={<StudentHome />} />
+            <Route path="courses" element={<StudentCourses />} />
+            <Route path="course/:id" element={<CourseDetails />} />
+          </Route>
 
           <Route path="/teacher" element={isTeacher ? <TeacherHome /> : <Navigate to="/" replace />} />
           <Route path="/teacher/courses" element={isTeacher ? <TeacherCourses /> : <Navigate to="/" replace />} />

@@ -1,0 +1,93 @@
+.course-details-page {
+    display: flex;
+    gap: 24px;
+    padding: 24px;
+}
+
+.course-details-main {
+    flex: 2;
+}
+
+.course-details-sidebar {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.course-details-image {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 16px;
+}
+
+.course-details-tabs {
+    display: flex;
+    gap: 16px;
+    border-bottom: 1px solid #e0e0e0;
+    margin-bottom: 16px;
+}
+
+.tab-button {
+    background: none;
+    border: none;
+    padding: 12px 0;
+    cursor: pointer;
+    font-size: 16px;
+    color: #666;
+}
+
+.tab-button.active {
+    color: #333;
+    border-bottom: 2px solid #8a2be2;
+}
+
+.course-overview-card, .mentor-card {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 16px;
+}
+
+.overview-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 16px 0;
+}
+
+.overview-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.price-section {
+    margin: 16px 0;
+}
+
+.add-to-cart-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #8a2be2;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.mentor-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.mentor-info img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.mentor-rating {
+    margin-top: 12px;
+}
