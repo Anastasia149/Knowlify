@@ -48,25 +48,7 @@ const LoginForm: React.FC = () => {
           </div>
 
           <div className="auth-left-content">
-            <h2 className="auth-title">Войдите через</h2>
-
-            <div className="auth-social-list">
-              <button type="button" className="auth-social-button google">
-                <Icon icon="logos:google-icon" className="auth-social-icon" />
-                <span>Google</span>
-              </button>
-              <button type="button" className="auth-social-button facebook">
-                <Icon icon="simple-icons:facebook" className="auth-social-icon" />
-                <span>Facebook</span>
-              </button>
-            </div>
-
-            <div className="auth-divider">
-              <span className="auth-divider-line" />
-              <span className="auth-divider-text">или</span>
-              <span className="auth-divider-line" />
-            </div>
-
+            <h2 className="auth-title">Вход</h2>
             <form className="auth-form" onSubmit={handleSubmit}>
               <label className="auth-input-wrapper">
                 <span className="auth-input-icon">

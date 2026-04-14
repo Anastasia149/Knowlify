@@ -38,8 +38,11 @@ const HomeFooter: React.FC = () => {
           <button className="home-footer-social" aria-label="Telegram">
             <Icon icon="simple-icons:telegram" />
           </button>
+          <button className="home-footer-social" aria-label="VK">
+            <Icon icon="simple-icons:vk" />
+          </button>
           <button className="home-footer-social" aria-label="YouTube">
-            <Icon icon="logos:youtube-icon" />
+            <Icon icon="simple-icons:youtube" />
           </button>
           <button className="home-footer-social" aria-label="GitHub">
             <Icon icon="simple-icons:github" />

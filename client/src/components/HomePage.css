@@ -256,13 +256,30 @@
    display: flex;
    gap: 12px;
  }
+ .home-footer-social {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   width: 40px;
+   height: 40px;
+   border-radius: 50%;
+   border: 1px solid #e5e7eb;
+   background: #fff;
+   cursor: pointer;
+   transition: all 0.2s ease;
+ }
  .home-footer-social svg {
-   width: 20px;
-   height: 20px;
-   color: #6b7280;
+   width: 18px;
+   height: 18px;
+   color: #4b5563;
+ }
+ .home-footer-social:hover {
+   border-color: #7b5cff;
+   background: #f3f0ff;
+   transform: translateY(-2px);
  }
  .home-footer-social:hover svg {
-   color: #111827;
+   color: #7b5cff;
  }
  
  @media (max-width: 960px) {
