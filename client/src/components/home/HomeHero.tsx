@@ -1,4 +1,5 @@
 import React from 'react';
+import illustration from './pictures/Online learning-amico.svg';
 
 type Props = {
   onStart: () => void;
@@ -30,9 +31,11 @@ const HomeHero: React.FC<Props> = ({ onStart, onCatalog }) => {
         </div>
       </div>
       <div className="home-hero-right">
-        <div className="home-hero-card home-hero-card-main" />
-        <div className="home-hero-card home-hero-card-top" />
-        <div className="home-hero-card home-hero-card-bottom" />
+        <img 
+          src={illustration} 
+          alt="Online learning" 
+          className="home-hero-illustration" 
+        />
       </div>
     </section>
   );

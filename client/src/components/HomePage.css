@@ -141,17 +141,17 @@
  
  .home-hero-right {
    position: relative;
-   height: 320px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
  }
- .home-hero-card {
-   position: absolute;
-   border-radius: 24px;
-   background: #f9fafb;
-   box-shadow: 0 18px 40px rgba(15, 23, 42, 0.35);
+ .home-hero-illustration {
+   width: 100%;
+   height: auto;
+   max-height: 400px;
+   object-fit: contain;
+   filter: drop-shadow(0 20px 30px rgba(0,0,0,0.15));
  }
- .home-hero-card-main { inset: 14% 8% 6% 8%; background: #fff; }
- .home-hero-card-top { width: 52%; height: 22%; top: 6%; left: 10%; background: #f3f4ff; }
- .home-hero-card-bottom { width: 48%; height: 22%; bottom: 8%; right: 8%; background: #f3f4ff; }
  
  .home-tracks {
    margin-top: 40px;

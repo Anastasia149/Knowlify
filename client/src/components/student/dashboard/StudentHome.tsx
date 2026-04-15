@@ -4,6 +4,7 @@ import { Icon } from '@iconify/react';
 import { Context } from '../../../index';
 import StudentCalendar from './components/StudentCalendar';
 import StudentSchedule from './components/StudentSchedule';
+import illustration from '../../home/pictures/Online learning-bro.svg';
 
 const StudentHome: React.FC = () => {
   const { store } = useContext(Context);
@@ -16,7 +17,7 @@ const StudentHome: React.FC = () => {
           <div className="student-hero-sub">Новые занятия уже ждут</div>
         </div>
         <div className="student-hero-art">
-          <Icon icon="mdi:school-outline" />
+          <img src={illustration} alt="Illustration" className="student-hero-illustration" />
         </div>
       </section>
 

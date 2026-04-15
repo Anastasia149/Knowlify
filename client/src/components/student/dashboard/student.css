@@ -129,7 +129,20 @@
  }
  .student-hero-title { font-size: 24px; font-weight: 800; }
  .student-hero-sub { opacity: .95; }
- .student-hero-art svg { width: 80px; height: 80px; color: #fff; opacity: .9; }
+ .student-hero-art {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+ }
+ .student-hero-illustration {
+   width: 240px;
+   height: 240px;
+   object-fit: contain;
+   filter: drop-shadow(0 10px 15px rgba(0,0,0,0.2));
+   margin-top: -40px;
+   margin-bottom: -40px;
+   margin-right: -20px;
+ }
  .student-calendar, .student-courses {
 
 }

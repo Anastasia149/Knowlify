@@ -125,7 +125,20 @@
  }
  .teacher-hero-title { font-size: 24px; font-weight: 800; }
  .teacher-hero-sub { opacity: .95; }
- .teacher-hero-art svg { width: 80px; height: 80px; color: #fff; opacity: .9; }
+ .teacher-hero-art {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+ }
+ .teacher-hero-illustration {
+   width: 240px;
+   height: 240px;
+   object-fit: contain;
+   filter: drop-shadow(0 10px 15px rgba(0,0,0,0.2));
+   margin-top: -40px;
+   margin-bottom: -40px;
+   margin-right: -20px;
+ }
  .teacher-calendar, .teacher-courses {
 
 }

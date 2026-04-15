@@ -10,6 +10,7 @@ import { observer } from 'mobx-react-lite';
 import { ICourse } from '../../../models/ICourse';
 import ScheduleHome from '../schedule/ScheduleHome';
 import '../courses/courses.css';
+import illustration from '../../home/pictures/Online learning-bro.svg';
 
 const TeacherHome: React.FC = () => {
   const { store } = useContext(Context);
@@ -45,7 +46,7 @@ const TeacherHome: React.FC = () => {
                 <div className="teacher-hero-sub">Новые возможности для преподавания</div>
               </div>
               <div className="teacher-hero-art">
-                <Icon icon="mdi:school-outline" />
+                <img src={illustration} alt="Illustration" className="teacher-hero-illustration" />
               </div>
             </section>
 
