@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon } from '@iconify/react';
-import './schedule.css';
+import './ScheduleCategoryList.css';
 
 const categories = [
   {},

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Icon } from '@iconify/react';
+import './HomeHeader.css';
 
 const HomeHeader: React.FC = () => {
   const navigate = useNavigate();

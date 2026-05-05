@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { Icon } from '@iconify/react';
-import '../teacher.css';
+import './TeacherCalendar.css';
 
 const months = [
   'Январь','Февраль','Март','Апрель','Май','Июнь',

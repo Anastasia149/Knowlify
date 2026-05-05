@@ -2,7 +2,7 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 import TeacherSidebar from './components/TeacherSidebar';
 import TeacherHeader from './components/TeacherHeader';
-import './teacher.css';
+import './TeacherLayout.css';
 
 const TeacherLayout: React.FC = () => {
   return (

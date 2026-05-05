@@ -5,8 +5,8 @@ import { Context } from '../../../index';
 import TeacherSidebar from '../dashboard/components/TeacherSidebar';
 import TeacherHeader from '../dashboard/components/TeacherHeader';
 import { Icon } from '@iconify/react';
-import '../dashboard/teacher.css';
-import './courses.css';
+import '../dashboard/TeacherLayout.css';
+import './CourseDetail.css';
 
 import { CourseDetails } from '../../../models/ICourseDetail';
 import Loader from '../../common/Loader';

@@ -2,11 +2,11 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../../../index';
-import { Lesson } from '../../../models/ICourseDetail';
+import { CourseDetails, Lesson, Material } from '../../../models/ICourseDetail';
 import TeacherSidebar from '../dashboard/components/TeacherSidebar';
 import TeacherHeader from '../dashboard/components/TeacherHeader';
-import '../dashboard/teacher.css';
-import '../courses/courses.css';
+import '../dashboard/TeacherLayout.css';
+import '../courses/CreateLesson.css';
 
 const LessonDetail: React.FC = () => {
   const { lessonId } = useParams<{ lessonId: string }>();

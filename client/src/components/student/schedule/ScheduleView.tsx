@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { Icon } from '@iconify/react';
-import './schedule.css';
+import './ScheduleView.css';
 
 function alignToMonday(date: Date) {
   const d = new Date(date);

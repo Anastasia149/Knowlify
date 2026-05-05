@@ -1,0 +1,117 @@
+.teacher-courses-page {
+  /* No specific styles for the page container itself in TeacherCourses.tsx */
+}
+
+.teacher-courses-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 24px;
+}
+
+.teacher-add-btn {
+  padding: 10px 20px;
+  background-color: #4f46e5;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  min-width: 180px;
+  text-align: center;
+  transition: background-color 0.2s ease;
+}
+
+.teacher-add-btn:hover {
+  background-color: #4338ca;
+}
+
+.teacher-courses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.course-card {
+  background-color: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.course-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+.course-card-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  background-color: #f3f4f6;
+}
+
+.course-card-body {
+  padding: 16px;
+}
+
+.course-card-title {
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.course-card-description {
+  font-size: 14px;
+  color: #6b7280;
+  margin-bottom: 16px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-height: 40px; 
+}
+
+.course-card-details {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.course-card-status {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.course-card-status.draft {
+  background-color: #f3f4f6;
+  color: #4b5563;
+}
+
+.course-card-status.published {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.course-card-price {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.teacher-courses-empty {
+  text-align: center;
+  padding: 80px 20px;
+  border-radius: 16px;
+  margin-top: 20px;
+}
+
+.teacher-courses-empty h2 {
+  margin: 0;
+  color: #6b7280;
+  font-weight: 500;
+}

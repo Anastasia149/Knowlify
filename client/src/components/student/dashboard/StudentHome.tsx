@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import './student.css';
+import './StudentHome.css';
 import { Icon } from '@iconify/react';
 import { Context } from '../../../index';
 import StudentCalendar from './components/StudentCalendar';

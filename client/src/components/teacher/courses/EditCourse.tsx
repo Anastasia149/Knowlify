@@ -5,8 +5,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import TeacherSidebar from '../dashboard/components/TeacherSidebar';
 import TeacherHeader from '../dashboard/components/TeacherHeader';
 import { useFormFields } from '../../../hooks/useFormFields';
-import '../dashboard/teacher.css';
-import './courses.css';
+import '../dashboard/TeacherLayout.css';
+import './CreateCourse.css';
 
 const EditCourse: React.FC = () => {
   const { id } = useParams<{ id: string }>();

@@ -9,7 +9,8 @@ import TeacherSchedule from './components/TeacherSchedule';
 import { observer } from 'mobx-react-lite';
 import { ICourse } from '../../../models/ICourse';
 import ScheduleHome from '../schedule/ScheduleHome';
-import '../courses/courses.css';
+import '../courses/TeacherCourses.css';
+import './TeacherHome.css';
 import illustration from '../../home/pictures/Online learning-bro.svg';
 
 const TeacherHome: React.FC = () => {

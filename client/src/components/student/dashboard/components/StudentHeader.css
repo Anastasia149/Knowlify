@@ -1,0 +1,63 @@
+.student-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  border: 1px solid #eef0f5;
+  border-radius: 16px;
+  padding: 16px 18px;
+  margin-bottom: 16px;
+}
+
+.student-hello {
+  font-weight: 800;
+}
+
+.student-hello-sub {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.student-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.student-link-btn {
+  display: none;
+}
+
+.student-icon-btn {
+  padding: 6px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #111;
+  outline: none;
+}
+
+.student-icon-btn svg {
+  width: 28px;
+  height: 28px;
+}
+
+.student-icon-btn:hover {
+  color: #4b5563;
+}
+
+.student-avatar {
+  cursor: pointer;
+  width: 46px;
+  height: 46px;
+  border: 1px solid #111;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+}
+
+.student-avatar svg {
+  width: 28px;
+  height: 28px;
+  color: #111;
+}

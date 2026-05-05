@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import './schedule.css';
-import ScheduleCalendar from '../schedule/ScheduleCalendar';
-import ScheduleView from '../schedule/ScheduleView';
-import ScheduleCategoryList from '../schedule/ScheduleCategoryList';
+import './ScheduleHome.css';
+import ScheduleCalendar from './ScheduleCalendar';
+import ScheduleView from './ScheduleView';
+import ScheduleCategoryList from './ScheduleCategoryList';
 
 const ScheduleHome: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());

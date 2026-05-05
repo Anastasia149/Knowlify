@@ -4,6 +4,7 @@ import { Context } from '../../index';
 import { observer } from 'mobx-react-lite';
 import { ICourse } from '../../models/ICourse';
 import { useNavigate } from 'react-router-dom';
+import './HomeTracks.css';
 
 const HomeTracks: React.FC = () => {
   const { store } = useContext(Context);

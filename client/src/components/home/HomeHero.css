@@ -1,0 +1,77 @@
+.home-hero {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 48px;
+  padding: 32px;
+  border-radius: 32px;
+  background: linear-gradient(145deg, #7b5cff, #5d3bff);
+  color: #fff;
+  align-items: center;
+}
+
+.home-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.home-badge {
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: #ffffff22;
+  border: 1px solid #ffffff55;
+  font-size: 12px;
+}
+
+.home-title {
+  font-size: 38px;
+  line-height: 1.15;
+  margin: 8px 0 8px;
+  font-weight: 800;
+}
+
+.home-subtitle {
+  font-size: 16px;
+  opacity: 0.95;
+}
+
+.home-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.home-secondary {
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 1px solid #ffffff66;
+  background: #ffffff22;
+  color: #fff;
+  cursor: pointer;
+}
+
+.home-secondary:hover {
+  background: #ffffff33;
+}
+
+.home-hero-right {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home-hero-illustration {
+  width: 100%;
+  height: auto;
+  max-height: 400px;
+  object-fit: contain;
+  filter: drop-shadow(0 20px 30px rgba(0,0,0,0.15));
+}
+
+@media (max-width: 960px) {
+  .home-hero {
+    grid-template-columns: 1fr;
+  }
+}

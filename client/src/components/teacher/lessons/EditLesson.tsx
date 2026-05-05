@@ -7,8 +7,8 @@ import TeacherHeader from '../dashboard/components/TeacherHeader';
 import { useFormFields } from '../../../hooks/useFormFields';
 import { Module, Material } from '../../../models/ICourseDetail';
 import $api from '../../../http';
-import '../dashboard/teacher.css';
-import '../courses/courses.css';
+import '../dashboard/TeacherLayout.css';
+import '../courses/CreateLesson.css';
 
 const EditLesson: React.FC = () => {
   const { lessonId } = useParams<{ lessonId: string }>();

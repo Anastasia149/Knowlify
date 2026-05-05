@@ -4,8 +4,8 @@ import { Context } from '../../../index';
 import { ICourse } from '../../../models/ICourse';
 import TeacherSidebar from '../dashboard/components/TeacherSidebar';
 import TeacherHeader from '../dashboard/components/TeacherHeader';
-import '../dashboard/teacher.css';
-import './courses.css';
+import '../dashboard/TeacherLayout.css';
+import './TeacherCourses.css';
 import { Icon } from '@iconify/react';
 
 import { useNavigate } from 'react-router-dom';

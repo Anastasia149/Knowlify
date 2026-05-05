@@ -1,0 +1,72 @@
+.teacher-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  border: 1px solid #eef0f5;
+  border-radius: 16px;
+  padding: 16px 18px;
+  margin-bottom: 16px;
+}
+
+.teacher-hello {
+  font-weight: 800;
+}
+
+.teacher-hello-sub {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.teacher-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.teacher-link-btn {
+  display: none;
+}
+
+.teacher-icon-btn {
+  padding: 6px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #111;
+}
+
+.teacher-icon-btn svg {
+  width: 28px;
+  height: 28px;
+}
+
+.teacher-icon-btn:hover {
+  color: #4b5563;
+}
+
+.teacher-avatar {
+  cursor: pointer;
+  width: 46px;
+  height: 46px;
+  border: 1px solid #111;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+}
+
+.teacher-avatar svg {
+  width: 28px;
+  height: 28px;
+  color: #111;
+}
+
+.teacher-logout-btn {
+  border: none;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: linear-gradient(145deg, #7b5cff, #5d3bff);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(88, 80, 236, 0.4);
+}

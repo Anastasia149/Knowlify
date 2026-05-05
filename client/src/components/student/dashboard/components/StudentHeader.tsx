@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Icon } from '@iconify/react';
-import '../student.css';
+import './StudentHeader.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Context } from '../../../../index';
 

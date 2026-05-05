@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './schedule.css';
+import './ScheduleHome.css';
 import ScheduleCalendar from './ScheduleCalendar';
 import ScheduleView from './ScheduleView';
 import ScheduleCategoryList from './ScheduleCategoryList';

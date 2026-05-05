@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon } from '@iconify/react';
-import '../student.css';
+import './StudentSidebar.css';
 import { NavLink } from 'react-router-dom';
 
 const primary = [

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon } from '@iconify/react';
-import '../teacher.css';
+import './TeacherSidebar.css';
 import { useNavigate, useSearchParams, useLocation } from 'react-router-dom';
 
 const primary = [

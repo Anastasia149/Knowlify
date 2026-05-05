@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Icon } from '@iconify/react';
-import '../teacher.css';
+import './TeacherHeader.css';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { Context } from '../../../../index';
 import { observer } from 'mobx-react-lite';

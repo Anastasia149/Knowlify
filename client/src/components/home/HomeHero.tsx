@@ -1,5 +1,6 @@
 import React from 'react';
 import illustration from './pictures/Online learning-amico.svg';
+import './HomeHero.css';
 
 type Props = {
   onStart: () => void;

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Icon } from '@iconify/react';
+import './HomeFooter.css';
 
 const HomeFooter: React.FC = () => {
   return (

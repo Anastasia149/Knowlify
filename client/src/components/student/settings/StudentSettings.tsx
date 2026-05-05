@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Context } from '../../../index';
-import '../dashboard/student.css';
+import './StudentSettings.css';
 
 const StudentSettings: React.FC = () => {
   const { store } = useContext(Context);

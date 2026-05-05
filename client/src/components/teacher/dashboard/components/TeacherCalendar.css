@@ -1,0 +1,79 @@
+.teacher-calendar {
+  grid-area: 1 / 2 / 2 / 3;
+}
+
+.teacher-cal {
+  display: grid;
+  gap: 10px;
+  background: #fff;
+  border: 1px solid #eef0f5;
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.teacher-cal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.teacher-cal-title {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-weight: 800;
+}
+
+.teacher-cal-year {
+  color: #6b7280;
+  font-size: 16px;
+}
+
+.teacher-cal-month {
+  font-size: 18px;
+}
+
+.teacher-cal-arrow {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: #111;
+}
+
+.teacher-cal-arrow svg {
+  width: 22px;
+  height: 22px;
+}
+
+.teacher-cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+}
+
+.teacher-cal-day {
+  text-align: center;
+  color: #A0A0A0;
+  font-size: 13px;
+}
+
+.teacher-cal-date {
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: #111;
+}
+
+.teacher-cal-date.today {
+  background: #F1EEFE;
+  color: #8173DA;
+  font-weight: 700;
+}
+
+.teacher-cal-date.other-month {
+  color: #d1d5db;
+}

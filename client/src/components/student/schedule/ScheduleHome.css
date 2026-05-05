@@ -1,0 +1,9 @@
+.schedule-home {
+  display: grid;
+  grid-template-columns: 1fr 370px;
+  gap: 24px;
+}
+
+.schedule-sidebar {
+  display: block;
+}

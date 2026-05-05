@@ -1,0 +1,61 @@
+.teacher-schedule-box {
+  grid-area: 2 / 2 / 4 / 3;
+  background: #fff;
+  border: 1px solid #eef0f5;
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.teacher-schedule .teacher-section-title {
+  margin-bottom: 20px;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+.schedule-grid {
+  display: grid;
+  gap: 12px;
+  padding: 0 10px;
+}
+
+.schedule-row {
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  gap: 16px;
+  align-items: center;
+}
+
+.schedule-add {
+  opacity: 1;
+  background: transparent;
+  border-radius: 0;
+  width: auto;
+  height: auto;
+  border: none;
+  color: #9ca3af;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.schedule-add svg {
+  width: 22px;
+  height: 22px;
+}
+
+.schedule-time {
+  font-weight: 400;
+  color: #9ca3af;
+  font-size: 14px;
+  text-align: left;
+}
+
+.schedule-slot {
+  height: 48px;
+  border: none;
+  border-radius: 10px;
+  background: #f7f8fa;
+  display: grid;
+  place-items: center;
+}

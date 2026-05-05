@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon } from '@iconify/react';
-import '../student.css';
+import './StudentSchedule.css';
 
 const hours = Array.from({ length: 15 }, (_, i) => i + 8);
 
