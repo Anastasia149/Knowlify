@@ -1,23 +1,24 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../../../index';
 import { Icon } from '@iconify/react';
 import './CourseDetails.css';
 import { ICourse } from '../../../models/ICourse';
+import { CourseDetails as ICourseDetail } from '../../../models/ICourseDetail';
 import Loader from '../../common/Loader';
 
 const CourseDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { store } = useContext(Context);
-  const [course, setCourse] = useState<ICourse | null>(null);
+  const navigate = useNavigate();
+  const [course, setCourse] = useState<ICourseDetail | null>(null);
   const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState('description');
 
   useEffect(() => {
-    console.log('CourseDetails mounted, id:', id);
     if (id) {
-      store.getCourseById(id).then(data => {
-        console.log('Data received from store:', data);
+      store.getCourseDetails(Number(id)).then(data => {
         if (data) {
           setCourse(data);
         }
@@ -49,15 +50,54 @@ const CourseDetails: React.FC = () => {
       <div className="course-details-left-col">
         <div className="course-content-panel">
           <h2>{course.title}</h2>
-          <img src={course.image_url} alt={course.title} className="course-details-image" />
+          <img src={course.image_url || 'https://via.placeholder.com/800x400'} alt={course.title} className="course-details-image" />
           <div className="course-details-tabs">
-              <button className="tab-button active">Описание</button>
-              <button className="tab-button">Инструменты</button>
-              <button className="tab-button">Отзывы</button>
-              <button className="tab-button">Сокурсники</button>
+              <button className={`tab-button ${activeTab === 'description' ? 'active' : ''}`} onClick={() => setActiveTab('description')}>Описание</button>
+              <button className={`tab-button ${activeTab === 'curriculum' ? 'active' : ''}`} onClick={() => setActiveTab('curriculum')}>Программа</button>
+              <button className={`tab-button ${activeTab === 'reviews' ? 'active' : ''}`} onClick={() => setActiveTab('reviews')}>Отзывы</button>
           </div>
           <div className="course-details-tab-content">
-              <p>{course.description}</p>
+              {activeTab === 'description' && <p>{course.description}</p>}
+              {activeTab === 'curriculum' && (
+                <div className="student-curriculum">
+                  {course.modules?.map(module => (
+                    <div key={module.id} className="curriculum-module">
+                      <h4>{module.title}</h4>
+                      <div className="curriculum-lessons">
+                        {module.lessons.map(lesson => (
+                          <div key={lesson.id} className="curriculum-lesson" onClick={() => navigate(`/student/lesson/${lesson.id}`)}>
+                            <div className="lesson-left">
+                              <Icon icon={lesson.type === 'assignment' ? 'mdi:note-edit-outline' : (lesson.type === 'test' ? 'mdi:help-circle-outline' : 'mdi:play-circle-outline')} />
+                              <span>{lesson.title}</span>
+                            </div>
+                            <div className="lesson-right">
+                              <span className="lesson-type-badge">{lesson.type === 'lecture' ? 'Лекция' : (lesson.type === 'assignment' ? 'Задание' : 'Тест')}</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                  {course.lessons?.length > 0 && (
+                    <div className="curriculum-module">
+                      <h4>Дополнительные уроки</h4>
+                      <div className="curriculum-lessons">
+                        {course.lessons.map(lesson => (
+                          <div key={lesson.id} className="curriculum-lesson" onClick={() => navigate(`/student/lesson/${lesson.id}`)}>
+                            <div className="lesson-left">
+                              <Icon icon={lesson.type === 'assignment' ? 'mdi:note-edit-outline' : (lesson.type === 'test' ? 'mdi:help-circle-outline' : 'mdi:play-circle-outline')} />
+                              <span>{lesson.title}</span>
+                            </div>
+                            <div className="lesson-right">
+                              <span className="lesson-type-badge">{lesson.type === 'lecture' ? 'Лекция' : (lesson.type === 'assignment' ? 'Задание' : 'Тест')}</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
           </div>
         </div>
       </div>

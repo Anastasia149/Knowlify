@@ -18,6 +18,7 @@ const EditLesson: React.FC = () => {
     title: '',
     content: '',
     moduleId: '',
+    type: 'lecture',
     image: null as File | null,
     file: null as File | null,
   });
@@ -37,6 +38,7 @@ const EditLesson: React.FC = () => {
             title: data.title,
             content: data.content,
             moduleId: data.module_id?.toString() || '',
+            type: data.type || 'lecture',
             image: null,
             file: null,
           });
@@ -162,15 +164,21 @@ const EditLesson: React.FC = () => {
     }
 
     const moduleId = fields.moduleId === '' ? null : fields.moduleId;
-    await store.updateLesson(lessonId, fields.title, fields.content, moduleId, imageUrl);
+    await store.updateLesson(lessonId, fields.title, fields.content, moduleId, imageUrl, fields.type);
     navigate(`/teacher/lesson/${lessonId}`);
+  };
+
+  const typeNames: { [key: string]: string } = {
+    lecture: 'лекции',
+    assignment: 'задания',
+    test: 'теста'
   };
 
   return (
     <div className="teacher-layout">
       <TeacherSidebar />
       <main className="teacher-content">
-        <TeacherHeader name="Редактирование урока" />
+        <TeacherHeader name={`Редактирование ${typeNames[fields.type] || 'урока'}`} />
         <div className="teacher-courses-page">
           <form className="create-course-form" onSubmit={handleSubmit}>
             <div className="form-group">

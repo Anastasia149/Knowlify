@@ -22,6 +22,7 @@ import ScheduleHome from './components/student/schedule/ScheduleHome';
 import StudentLayout from './components/student/dashboard/StudentLayout';
 import StudentCourses from './components/student/courses/StudentCourses';
 import CourseDetails from './components/student/courses/CourseDetails';
+import StudentLessonDetail from './components/student/courses/StudentLessonDetail';
 
 function App() {
   const {store} = useContext(Context);
@@ -47,6 +48,7 @@ function App() {
             <Route path="schedule" element={<ScheduleHome />} />
             <Route path="settings" element={<StudentSettings />} />
             <Route path="courses/:id" element={<CourseDetails />} />
+            <Route path="lesson/:lessonId" element={<StudentLessonDetail />} />
           </Route>
 
           <Route path="/teacher" element={isTeacher ? <TeacherHome /> : <Navigate to="/" replace />} />

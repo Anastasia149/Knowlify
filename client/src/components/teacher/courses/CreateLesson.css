@@ -160,3 +160,49 @@
 .cancel-btn:hover {
   background-color: #e5e7eb;
 }
+
+/* Submission Styles for LessonDetail */
+.submissions-list {
+  display: grid;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.submission-item {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  padding: 16px;
+  background-color: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+}
+
+.submission-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+}
+
+.submission-user svg {
+  width: 32px;
+  height: 32px;
+  color: #8173DA;
+}
+
+.submission-type a {
+  color: #4f46e5;
+  text-decoration: underline;
+}
+
+.submission-date {
+  text-align: right;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.info-text {
+  color: #6b7280;
+  font-style: italic;
+}

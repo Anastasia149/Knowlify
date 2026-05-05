@@ -145,6 +145,72 @@
     cursor: pointer;
 }
 
+.add-to-cart-button:hover {
+  background-color: #4338ca;
+}
+
+/* Curriculum Styles */
+.student-curriculum {
+  display: grid;
+  gap: 24px;
+}
+
+.curriculum-module h4 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: #111827;
+}
+
+.curriculum-lessons {
+  display: grid;
+  gap: 10px;
+}
+
+.curriculum-lesson {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.curriculum-lesson:hover {
+  border-color: #4f46e5;
+  background-color: #fff;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.08);
+}
+
+.lesson-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.lesson-left svg {
+  font-size: 20px;
+  color: #4f46e5;
+}
+
+.lesson-left span {
+  font-weight: 500;
+  color: #374151;
+}
+
+.lesson-type-badge {
+  font-size: 11px;
+  font-weight: 600;
+  color: #6b7280;
+  background-color: #f3f4f6;
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
 .mentor-info {
     display: flex;
     align-items: center;

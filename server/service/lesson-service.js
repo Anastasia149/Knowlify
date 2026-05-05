@@ -2,12 +2,20 @@ const pool = require('../db');
 const fileService = require('./file-service');
 
 class LessonService {
-    async createLesson(courseId, moduleId, title, content, imageUrl) {
+    async createLesson(courseId, moduleId, title, content, imageUrl, type = 'lecture') {
         const newLesson = await pool.query(
-            `INSERT INTO lessons (course_id, module_id, title, content, image_url) VALUES ($1, $2, $3, $4, $5) RETURNING *`,
-            [courseId, moduleId, title, content, imageUrl]
+            `INSERT INTO lessons (course_id, module_id, title, content, image_url, type) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
+            [courseId, moduleId, title, content, imageUrl, type]
         );
         return newLesson.rows[0];
+    }
+
+    async updateLesson(lessonId, title, content, moduleId, imageUrl, type) {
+        const updatedLesson = await pool.query(
+            `UPDATE lessons SET title = $1, content = $2, module_id = $3, image_url = $4, type = $5 WHERE id = $6 RETURNING *`,
+            [title, content, moduleId, imageUrl, type, lessonId]
+        );
+        return updatedLesson.rows[0];
     }
 
     async createLessonMaterial(lessonId, file) {
@@ -60,14 +68,6 @@ class LessonService {
         `;
         const { rows } = await pool.query(query, [lessonId]);
         return rows[0];
-    }
-
-    async updateLesson(lessonId, title, content, moduleId, imageUrl) {
-        const updatedLesson = await pool.query(
-            `UPDATE lessons SET title = $1, content = $2, module_id = $3, image_url = $4 WHERE id = $5 RETURNING *`,
-            [title, content, moduleId, imageUrl, lessonId]
-        );
-        return updatedLesson.rows[0];
     }
 
     async deleteLessonMaterial(materialId) {

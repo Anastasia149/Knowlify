@@ -1,0 +1,37 @@
+const submissionService = require('../service/submission-service');
+
+class SubmissionController {
+    async submitAssignment(req, res, next) {
+        try {
+            const { lessonId, type, content } = req.body;
+            const studentId = req.user.id;
+            const submission = await submissionService.submitAssignment(lessonId, studentId, type, content);
+            return res.json(submission);
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    async getSubmissionsByLesson(req, res, next) {
+        try {
+            const { lessonId } = req.params;
+            const submissions = await submissionService.getSubmissionsByLesson(lessonId);
+            return res.json(submissions);
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    async getStudentSubmission(req, res, next) {
+        try {
+            const { lessonId } = req.params;
+            const studentId = req.user.id;
+            const submission = await submissionService.getStudentSubmission(lessonId, studentId);
+            return res.json(submission);
+        } catch (e) {
+            next(e);
+        }
+    }
+}
+
+module.exports = new SubmissionController();

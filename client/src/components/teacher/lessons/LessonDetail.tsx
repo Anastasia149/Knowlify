@@ -5,6 +5,7 @@ import { Context } from '../../../index';
 import { CourseDetails, Lesson, Material } from '../../../models/ICourseDetail';
 import TeacherSidebar from '../dashboard/components/TeacherSidebar';
 import TeacherHeader from '../dashboard/components/TeacherHeader';
+import { Icon } from '@iconify/react';
 import '../dashboard/TeacherLayout.css';
 import '../courses/CreateLesson.css';
 
@@ -14,11 +15,17 @@ const LessonDetail: React.FC = () => {
   const navigate = useNavigate();
 
   const [lesson, setLesson] = useState<Lesson | null>(null);
+  const [submissions, setSubmissions] = useState<any[]>([]);
   const [activeTab, setActiveTab] = useState('students');
 
   useEffect(() => {
     if (lessonId) {
-      store.getLesson(lessonId).then(data => setLesson(data || null));
+      store.getLesson(lessonId).then(data => {
+        setLesson(data || null);
+        if (data?.type === 'assignment') {
+          store.getLessonSubmissions(lessonId).then(subs => setSubmissions(Array.isArray(subs) ? subs : []));
+        }
+      });
     }
   }, [lessonId, store]);
 
@@ -61,7 +68,32 @@ const LessonDetail: React.FC = () => {
               <div className="tab-content">
                 {activeTab === 'students' && (
                   <div className="students-tab">
-                    <p>Здесь будут отображаться работы учеников.</p>
+                    {lesson.type === 'lecture' ? (
+                      <p className="info-text">Для лекций не предусмотрена сдача работ.</p>
+                    ) : (
+                      <div className="submissions-list">
+                        {submissions.length === 0 ? (
+                          <p>Работ пока нет.</p>
+                        ) : (
+                          submissions.map(s => (
+                            <div key={s.id} className="submission-item">
+                              <div className="submission-user">
+                                <Icon icon="solar:user-circle-linear" />
+                                <span>{s.student_name}</span>
+                              </div>
+                              <div className="submission-type">
+                                {s.type === 'completed' && <span>Отмечено как выполнено</span>}
+                                {s.type === 'link' && <a href={s.content} target="_blank" rel="noopener noreferrer">Открыть ссылку</a>}
+                                {s.type === 'file' && <a href={s.content} target="_blank" rel="noopener noreferrer">Открыть файл</a>}
+                              </div>
+                              <div className="submission-date">
+                                {new Date(s.created_at).toLocaleString()}
+                              </div>
+                            </div>
+                          ))
+                        )}
+                      </div>
+                    )}
                   </div>
                 )}
 

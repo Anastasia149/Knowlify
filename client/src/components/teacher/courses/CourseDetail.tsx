@@ -19,6 +19,7 @@ const CourseDetail: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [activeModule, setActiveModule] = useState<number[]>([]);
   const [activeTab, setActiveTab] = useState('lessons');
+  const [isAddLessonOpen, setIsAddLessonOpen] = useState(false);
 
   useEffect(() => {
     const fetchCourseDetails = async () => {
@@ -99,9 +100,32 @@ const CourseDetail: React.FC = () => {
             {activeTab === 'lessons' && (
               <>
                 <div className="course-detail-header">
-                  <button className="teacher-add-btn" onClick={() => navigate(`/teacher/course/${id}/create-lesson`)}>
-                    Добавить урок
-                  </button>
+                  <div className="add-lesson-dropdown-container">
+                    <button 
+                      className={`teacher-add-btn ${isAddLessonOpen ? 'active' : ''}`} 
+                      onClick={() => setIsAddLessonOpen(!isAddLessonOpen)}
+                    >
+                      <span>Добавить урок</span>
+                      <Icon icon="mdi:chevron-down" />
+                    </button>
+                    
+                    {isAddLessonOpen && (
+                      <div className="add-lesson-dropdown">
+                        <button onClick={() => navigate(`/teacher/course/${id}/create-lesson?type=lecture`)}>
+                          <Icon icon="mdi:play-circle-outline" />
+                          <span>Лекция</span>
+                        </button>
+                        <button onClick={() => navigate(`/teacher/course/${id}/create-lesson?type=assignment`)}>
+                          <Icon icon="mdi:note-edit-outline" />
+                          <span>Задание</span>
+                        </button>
+                        <button onClick={() => navigate(`/teacher/course/${id}/create-lesson?type=test`)}>
+                          <Icon icon="mdi:help-circle-outline" />
+                          <span>Тест</span>
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 </div>
 
                 {isCourseEmpty ? (

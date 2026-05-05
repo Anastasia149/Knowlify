@@ -10,6 +10,7 @@ export interface Lesson {
   title: string;
   content: string;
   image_url: string | null;
+  type: 'lecture' | 'assignment' | 'test';
   materials: Material[];
   course_id: number;
   module_id: number | null;
@@ -25,9 +26,11 @@ export interface CourseDetails {
   id: number;
   title: string;
   description: string;
+  author_name: string;
   modules: Module[];
   lessons: Lesson[];
   status: 'draft' | 'published';
   price: number;
   image_url: string | null;
+  lessons_count?: number;
 }

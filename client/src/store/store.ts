@@ -54,18 +54,18 @@ export default class Store {
         }
     }
 
-    async createLesson(courseId: string, moduleId: string | null, title: string, content: string, imageUrl: string | null): Promise<Lesson | undefined> {
+    async createLesson(courseId: string, moduleId: string | null, title: string, content: string, imageUrl: string | null, type: string): Promise<Lesson | undefined> {
         try {
-            const response = await $api.post<Lesson>(`/lessons`, { courseId, moduleId, title, content, imageUrl });
+            const response = await $api.post<Lesson>(`/lessons`, { courseId, moduleId, title, content, imageUrl, type });
             return response.data;
         } catch (e) {
             console.log("FULL ERROR:", e);
         }
     }
 
-    async updateLesson(lessonId: string, title: string, content: string, moduleId: string | null, imageUrl: string | null): Promise<Lesson | undefined> {
+    async updateLesson(lessonId: string, title: string, content: string, moduleId: string | null, imageUrl: string | null, type: string): Promise<Lesson | undefined> {
         try {
-            const response = await $api.put<Lesson>(`/lessons/${lessonId}`, { title, content, moduleId, imageUrl });
+            const response = await $api.put<Lesson>(`/lessons/${lessonId}`, { title, content, moduleId, imageUrl, type });
             return response.data;
         } catch (e) {
             console.log("FULL ERROR:", e);
@@ -94,6 +94,33 @@ export default class Store {
     async deleteLesson(lessonId: string): Promise<void> {
         try {
             await $api.delete(`/lessons/${lessonId}`);
+        } catch (e) {
+            console.log("FULL ERROR:", e);
+        }
+    }
+
+    async submitAssignment(lessonId: number, type: 'link' | 'file' | 'completed', content: string) {
+        try {
+            const response = await $api.post('/submissions', { lessonId, type, content });
+            return response.data;
+        } catch (e) {
+            console.log("FULL ERROR:", e);
+        }
+    }
+
+    async getLessonSubmissions(lessonId: string) {
+        try {
+            const response = await $api.get(`/lessons/${lessonId}/submissions`);
+            return response.data;
+        } catch (e) {
+            console.log("FULL ERROR:", e);
+        }
+    }
+
+    async getMySubmission(lessonId: string) {
+        try {
+            const response = await $api.get(`/lessons/${lessonId}/my-submission`);
+            return response.data;
         } catch (e) {
             console.log("FULL ERROR:", e);
         }

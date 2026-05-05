@@ -8,6 +8,7 @@ const courseController = require('../controllers/course-controller');
 
 const fileController = require('../controllers/file-controller');
 const lessonController = require('../controllers/lesson-controller');
+const submissionController = require('../controllers/submission-controller');
 
 router.post('/registration', 
     body('name').isLength({min: 1, max: 64}),
@@ -35,5 +36,9 @@ router.post('/lessons/:lessonId/materials', authMiddleware, lessonController.upl
 router.put('/lessons/:lessonId', authMiddleware, lessonController.updateLesson);
 router.delete('/lessons/materials/:materialId', authMiddleware, lessonController.deleteMaterial);
 router.delete('/lessons/:lessonId', authMiddleware, lessonController.deleteLesson);
+
+router.post('/submissions', authMiddleware, submissionController.submitAssignment);
+router.get('/lessons/:lessonId/submissions', authMiddleware, submissionController.getSubmissionsByLesson);
+router.get('/lessons/:lessonId/my-submission', authMiddleware, submissionController.getStudentSubmission);
 
 module.exports = router;

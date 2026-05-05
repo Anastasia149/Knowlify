@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../../../index';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import TeacherSidebar from '../dashboard/components/TeacherSidebar';
 import TeacherHeader from '../dashboard/components/TeacherHeader';
 import { useFormFields } from '../../../hooks/useFormFields';
@@ -12,12 +12,16 @@ import './CreateLesson.css';
 
 const CreateLesson: React.FC = () => {
   const { courseId } = useParams<{ courseId: string }>();
+  const [searchParams] = useSearchParams();
+  const initialType = searchParams.get('type') || 'lecture';
+  
   const { store } = useContext(Context);
   const navigate = useNavigate();
   const { fields, handleChange, setFieldValue } = useFormFields({
     title: '',
     content: '',
     moduleId: '',
+    type: initialType,
     file: null as File | null,
     image: null as File | null,
   });
@@ -137,7 +141,7 @@ const CreateLesson: React.FC = () => {
     }
 
     const moduleId = fields.moduleId === '' ? null : fields.moduleId;
-    const newLesson = await store.createLesson(courseId, moduleId, fields.title, fields.content, imageUrl);
+    const newLesson = await store.createLesson(courseId, moduleId, fields.title, fields.content, imageUrl, fields.type);
 
     if (newLesson && fields.file) {
       await store.uploadLessonMaterial(newLesson.id, fields.file);
@@ -146,11 +150,17 @@ const CreateLesson: React.FC = () => {
     navigate(`/teacher/course/${courseId}`);
   };
 
+  const typeNames: { [key: string]: string } = {
+    lecture: 'лекции',
+    assignment: 'задания',
+    test: 'теста'
+  };
+
   return (
     <div className="teacher-layout">
       <TeacherSidebar />
       <main className="teacher-content">
-        <TeacherHeader name="Создание нового урока" />
+        <TeacherHeader name={`Создание ${typeNames[fields.type] || 'урока'}`} />
         <div className="teacher-courses-page">
           <form className="create-course-form" onSubmit={handleSubmit}>
             <div className="form-group">
