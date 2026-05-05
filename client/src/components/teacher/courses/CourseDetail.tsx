@@ -76,7 +76,7 @@ const CourseDetail: React.FC = () => {
     <div className="teacher-layout">
       <TeacherSidebar />
       <main className="teacher-content">
-        <TeacherHeader name={course?.title || 'Курс'} tab="courses" />
+        <TeacherHeader name={course?.title || 'Курс'} />
         <div className="teacher-courses-page">
           <h1>{course?.title}</h1>
 

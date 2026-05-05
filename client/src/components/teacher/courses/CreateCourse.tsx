@@ -76,7 +76,7 @@ const CreateCourse: React.FC = () => {
     <div className="teacher-layout">
       <TeacherSidebar />
       <main className="teacher-content">
-        <TeacherHeader name="Создание нового курса" tab="courses" />
+        <TeacherHeader name="Создание нового курса" />
         <div className="teacher-courses-page">
           <form className="create-course-form" onSubmit={handleSubmit}>
             <div className="form-group">

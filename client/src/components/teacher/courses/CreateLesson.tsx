@@ -150,7 +150,7 @@ const CreateLesson: React.FC = () => {
     <div className="teacher-layout">
       <TeacherSidebar />
       <main className="teacher-content">
-        <TeacherHeader name="Создание нового урока" tab="courses" />
+        <TeacherHeader name="Создание нового урока" />
         <div className="teacher-courses-page">
           <form className="create-course-form" onSubmit={handleSubmit}>
             <div className="form-group">

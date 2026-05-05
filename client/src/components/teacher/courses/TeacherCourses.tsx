@@ -22,7 +22,7 @@ const TeacherCourses: React.FC = () => {
     <div className="teacher-layout">
       <TeacherSidebar />
       <main className="teacher-content">
-        <TeacherHeader name={store.user?.name} tab="courses" />
+        <TeacherHeader />
         <div className="teacher-courses-page">
           <div className="teacher-courses-header">
             <button className="teacher-add-btn" onClick={() => navigate('/teacher/create-course')}>

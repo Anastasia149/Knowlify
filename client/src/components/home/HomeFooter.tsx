@@ -11,13 +11,6 @@ const HomeFooter: React.FC = () => {
         </div>
         <div className="home-footer-columns">
           <div className="home-footer-col">
-            <div className="home-footer-title">Направления</div>
-            <button className="home-footer-link">Frontend</button>
-            <button className="home-footer-link">Python</button>
-            <button className="home-footer-link">iOS</button>
-            <button className="home-footer-link">UX/UI</button>
-          </div>
-          <div className="home-footer-col">
             <div className="home-footer-title">Компания</div>
             <button className="home-footer-link">О нас</button>
             <button className="home-footer-link">Блог</button>

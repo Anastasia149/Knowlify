@@ -35,7 +35,7 @@ const LessonDetail: React.FC = () => {
     <div className="teacher-layout">
       <TeacherSidebar />
       <main className="teacher-content">
-        <TeacherHeader name={store.user?.name} tab={'courses'} />
+        <TeacherHeader name={lesson?.title || 'Урок'} />
         <div className="teacher-courses-page">
           {!lesson ? (
             <div>Загрузка...</div>

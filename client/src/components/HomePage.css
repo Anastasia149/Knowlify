@@ -156,6 +156,43 @@
  .home-tracks {
    margin-top: 40px;
  }
+ 
+ .home-features-grid {
+   display: grid;
+   grid-template-columns: repeat(3, 1fr);
+   gap: 24px;
+   margin-bottom: 48px;
+ }
+ 
+ .home-feature-item {
+   display: flex;
+   flex-direction: column;
+   gap: 16px;
+ }
+ 
+ .home-feature-title-box {
+   background: #5d3bff;
+   color: #fff;
+   padding: 12px 24px;
+   border-radius: 8px;
+   font-size: 20px;
+   font-weight: 600;
+   text-align: center;
+   cursor: pointer;
+   transition: background 0.2s;
+ }
+ 
+ .home-feature-title-box:hover {
+   background: #302083;
+ }
+ 
+ .home-feature-description {
+   font-size: 14px;
+   line-height: 1.5;
+   color: #6b7280;
+   margin: 0;
+ }
+ 
  .home-section-title {
    font-size: 24px;
    font-weight: 800;

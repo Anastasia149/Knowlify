@@ -1,40 +1,48 @@
 import React, { useContext } from 'react';
 import { Icon } from '@iconify/react';
 import '../teacher.css';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { Context } from '../../../../index';
 import { observer } from 'mobx-react-lite';
 
 type Props = {
   name?: string;
-  tab?: string;
 };
 
-const TeacherHeader = observer(({ name, tab }: Props) => {
+const TeacherHeader = observer(({ name }: Props) => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [searchParams] = useSearchParams();
   const { store } = useContext(Context);
 
   const userDisplayName = store.user?.name;
+
+  const getTitle = () => {
+    const tab = searchParams.get('tab');
+    const path = location.pathname;
+
+    if (path.startsWith('/teacher/courses')) return 'Мои курсы';
+    if (path.startsWith('/teacher/course/')) return name || 'Детали курса';
+    if (path.startsWith('/teacher/create-course')) return 'Создание курса';
+    if (path.startsWith('/teacher/lesson/')) return name || 'Урок';
+    
+    if (tab === 'schedule') return 'Расписание';
+    if (tab === 'settings') return 'Настройки';
+    if (tab === 'courses') return 'Мои курсы';
+    
+    return 'Главная';
+  };
+
+  const title = getTitle();
+  const isHome = title === 'Главная';
 
   const openSettings = () => navigate('/teacher?tab=settings');
   return (
     <div className="teacher-header">
       <div className="teacher-header-title">
-        {(!tab || tab === 'dashboard') && userDisplayName ? (
-          <div className="teacher-hello">Добро пожаловать, {userDisplayName}!</div>
-        ) : tab === 'schedule' ? (
-          <div className="teacher-hello">Расписание</div>
-        ) : tab === 'courses' ? (
-          <div className="teacher-hello">Мои курсы</div>
-        ) : name && name !== userDisplayName ? (
-          <div className="teacher-hello">{name}</div>
-        ) : userDisplayName ? (
-          <div className="teacher-hello">Добро пожаловать, {userDisplayName}!</div>
-        ) : (
-          <>
-            <div className="teacher-hello">Добро пожаловать!</div>
-            <div className="teacher-hello-sub">Хорошего дня!</div>
-          </>
+        <div className="teacher-hello">{title}</div>
+        {isHome && userDisplayName && (
+          <div className="teacher-hello-sub">Добро пожаловать, {userDisplayName}!</div>
         )}
       </div>
       <div className="teacher-header-actions">

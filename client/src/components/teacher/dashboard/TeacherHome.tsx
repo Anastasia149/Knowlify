@@ -30,7 +30,7 @@ const TeacherHome: React.FC = () => {
     <div className="teacher-layout">
       <TeacherSidebar />
       <main className="teacher-content">
-        <TeacherHeader name={store.user?.name} tab={tab} />
+        <TeacherHeader />
         {tab === 'schedule' ? (
           <ScheduleHome />
         ) : tab === 'settings' ? (
