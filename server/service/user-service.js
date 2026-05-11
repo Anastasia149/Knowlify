@@ -8,6 +8,20 @@ const UserDto = require('../dtos/user-dto');
 const ApiError = require('../exceptions/api-error');
 
 class UserService{
+    /**
+     * В JWT нельзя класть avatar (data URL), courses и пр. — токен раздувается,
+     * cookie refreshToken превышает лимит браузера (~4KB), /refresh падает.
+     */
+    getJwtPayload(userLike) {
+      return {
+        id: userLike.id,
+        email: userLike.email,
+        name: userLike.name ?? '',
+        role: userLike.role,
+        isActivated: userLike.isActivated ?? userLike.is_activated ?? false,
+      };
+    }
+
     async registration(name, email, password, role){
       const candidate = await UserModel.findByEmail(email);
       if(candidate){
@@ -24,7 +38,7 @@ class UserService{
       await mailService.sendActivationMail(email, `${process.env.API_URL}/api/activate/${activationLink}`);
 
       const userDto = new UserDto(user); // id, email, isActivated, role, name
-      const tokens = tokenService.generateTokens({...userDto});
+      const tokens = tokenService.generateTokens(this.getJwtPayload(userDto));
       await tokenService.saveToken(userDto.id, tokens.refreshToken);
 
       const userWithCourses = await this.buildUserData(user);
@@ -39,7 +53,7 @@ class UserService{
       await UserModel.activateUser(activationLink);
 
       const userWithCourses = await this.buildUserData(user);
-      const tokens = tokenService.generateTokens({...userWithCourses});
+      const tokens = tokenService.generateTokens(this.getJwtPayload(userWithCourses));
 
       await tokenService.saveToken(userWithCourses.id, tokens.refreshToken);
 
@@ -56,7 +70,7 @@ class UserService{
         throw ApiError.BadRequest('Неверный пароль');
       }
       const userWithCourses = await this.buildUserData(user);
-      const tokens = tokenService.generateTokens({...userWithCourses});
+      const tokens = tokenService.generateTokens(this.getJwtPayload(userWithCourses));
 
       await tokenService.saveToken(userWithCourses.id, tokens.refreshToken);
       return { ...tokens, user: userWithCourses};
@@ -87,7 +101,7 @@ class UserService{
       }
       const user = await UserModel.findById(userData.id);
       const userWithCourses = await this.buildUserData(user);
-      const tokens = tokenService.generateTokens({...userWithCourses});
+      const tokens = tokenService.generateTokens(this.getJwtPayload(userWithCourses));
       
       await tokenService.saveToken(userWithCourses.id, tokens.refreshToken);
       return { ...tokens, user: userWithCourses};

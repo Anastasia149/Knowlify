@@ -31,7 +31,7 @@ const StudentCoursesSearch: React.FC = () => {
   }, [store]);
 
   const isEnrolled = (courseId: number): boolean => {
-    return store.user.courses?.some(course => course.id === courseId) || false;
+    return store.user.courses?.some((course) => Number(course.id) === courseId) || false;
   };
 
   const handleEnroll = async (e: React.MouseEvent, courseId: number) => {
@@ -39,7 +39,7 @@ const StudentCoursesSearch: React.FC = () => {
     e.stopPropagation();
     try {
       await store.enrollCourse(courseId);
-      navigate(`/student/courses/${courseId}`);
+      navigate(`/student/my-courses/${courseId}`);
     } catch (error) {
       console.error("Ошибка при записи на курс:", error);
       // Handle error, e.g., show a toast notification

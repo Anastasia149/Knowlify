@@ -47,21 +47,51 @@ const SearchDetails: React.FC = () => {
 
   const courseIdNum = Number(id);
 
+  const isFreeCourse =
+    course.price === null ||
+    course.price === undefined ||
+    Number(course.price) === 0;
+
+  const isPaidCourse = !isFreeCourse;
+
+  const alreadyEnrolled =
+    store.user?.courses?.some((c) => Number(c.id) === courseIdNum) ?? false;
+
+  const navigateToCoursePage = () => {
+    // В App.tsx маршрут courses/:id ведёт на SearchDetails; страница прохождения курса — my-courses/:id
+    navigate(`/student/my-courses/${courseIdNum}`);
+  };
+
+  /** Бесплатный: при первом входе записывает; если уже на курсе — только переход. Купленный платный — только переход. */
   const handleGoToCourse = async () => {
     if (!course) return;
 
-    const isFree = (Number(course.price) === 0 || course.price === null);
-    const alreadyEnrolled = store.user.courses?.some(c => c.id === courseIdNum) || false;
+    if (alreadyEnrolled) {
+      navigateToCoursePage();
+      return;
+    }
 
-    if (isFree && !alreadyEnrolled) {
-        try {
-          await store.enrollCourse(courseIdNum);
-          console.log(`Зачислен на бесплатный курс: ${course.title}`);
-        } catch (error) {
-          console.error("Ошибка при зачислении:", error);
+    if (isFreeCourse) {
+      try {
+        await store.enrollCourse(courseIdNum);
+        navigateToCoursePage();
+      } catch (error) {
+        console.error('Ошибка при зачислении:', error);
+        // Уже записан на сервере, но список курсов в store ещё не обновлён — всё равно ведём на курс
+        const status = (error as { response?: { status?: number } })?.response?.status;
+        if (status === 409 || status === 400) {
+          navigateToCoursePage();
         }
       }
-    navigate(`/student/search/${courseIdNum}`);
+      return;
+    }
+
+    navigateToCoursePage();
+  };
+
+  const handleAddToCart = () => {
+    // TODO: API корзины
+    console.log('Добавить в корзину', courseIdNum);
   };
 
   return (
@@ -108,7 +138,7 @@ const SearchDetails: React.FC = () => {
             <div className="price-section">
                 <span>Цена</span>
                 <span className="price-amount">
-                  {course.price && Number(course.price) > 0 ? `${course.price} BYN` : 'Бесплатно'}
+                  {isPaidCourse ? `${course.price} BYN` : 'Бесплатно'}
                 </span>
             </div>
             <div className="course-actions">
@@ -118,13 +148,19 @@ const SearchDetails: React.FC = () => {
                 >
                   <Icon icon={isFavorite ? 'mdi:heart' : 'mdi:heart-outline'} />
                 </button>
-                {Number(course.price) > 0 ? (
+                {isPaidCourse && !alreadyEnrolled ? (
                   <>
-                    <button className="cart-icon-button"><Icon icon="mdi:cart-outline" /></button>
-                    <button className="add-to-cart-button">Добавить в корзину</button>
+                    <button type="button" className="cart-icon-button" onClick={handleAddToCart}>
+                      <Icon icon="mdi:cart-outline" />
+                    </button>
+                    <button type="button" className="add-to-cart-button" onClick={handleAddToCart}>
+                      Добавить в корзину
+                    </button>
                   </>
                 ) : (
-                  <button className="go-to-course-button" onClick={handleGoToCourse}>Перейти к курсу</button>
+                  <button type="button" className="go-to-course-button" onClick={handleGoToCourse}>
+                    Перейти к курсу
+                  </button>
                 )}
             </div>
         </div>
