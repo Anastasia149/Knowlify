@@ -4,7 +4,6 @@ import { observer } from 'mobx-react-lite';
 import { Context } from '../../../index';
 import { Icon } from '@iconify/react';
 import './SearchDetails.css';
-import { ICourse } from '../../../models/ICourse';
 import { ISearchDetails } from '../../../models/ICourseDetail';
 import Loader from '../../common/Loader';
 

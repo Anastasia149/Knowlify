@@ -20,10 +20,10 @@ import NotFound from './components/common/NotFound';
 import StudentSettings from './components/student/settings/StudentSettings';
 import ScheduleHome from './components/student/schedule/ScheduleHome';
 import StudentLayout from './components/student/dashboard/StudentLayout';
-import StudentCoursesSearch from './components/student/courses/StudentCoursesSearch';
+import StudentCoursesSearch from './components/student/search/StudentCoursesSearch';
 import StudentMyCourses from './components/student/courses/StudentMyCourses';
 
-import SearchDetails from './components/student/courses/SearchDetails';
+import SearchDetails from './components/student/search/SearchDetails';
 import StudentCourseDetails from './components/student/courses/StudentCourseDetails';
 import StudentLessonDetail from './components/student/courses/StudentLessonDetail';
 import CreateTest from './components/teacher/courses/CreateTest';
