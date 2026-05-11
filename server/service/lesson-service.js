@@ -40,6 +40,7 @@ class LessonService {
             type = 'document';
         }
 
+        console.log("File name before DB insert:", file.name);
         const newMaterial = await pool.query(
             `INSERT INTO lesson_materials (lesson_id, type, title, file_url) VALUES ($1, $2, $3, $4) RETURNING *`,
             [lessonId, type, file.name, fileUrl]
