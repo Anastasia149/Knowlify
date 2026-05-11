@@ -201,3 +201,35 @@
   color: #6b7280;
   font-size: 14px;
 }
+
+.info-text {
+  color: #6b7280;
+  font-style: italic;
+}
+
+.lesson-detail-tabs {
+  display: flex;
+  gap: 30px;
+  margin-top: 24px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.tab-button {
+  padding: 10px 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #6b7280;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.tab-button.active {
+  color: #4f46e5;
+  border-bottom-color: #4f46e5;
+}
+
+.tab-content {
+  margin-top: 24px;
+}

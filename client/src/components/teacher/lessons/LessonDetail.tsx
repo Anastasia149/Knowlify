@@ -7,7 +7,7 @@ import TeacherSidebar from '../dashboard/components/TeacherSidebar';
 import TeacherHeader from '../dashboard/components/TeacherHeader';
 import { Icon } from '@iconify/react';
 import '../dashboard/TeacherLayout.css';
-import './LessonDetail.css';
+import '../courses/CreateLesson.css';
 
 const LessonDetail: React.FC = () => {
   const { lessonId } = useParams<{ lessonId: string }>();
@@ -22,13 +22,16 @@ const LessonDetail: React.FC = () => {
     if (lessonId) {
       store.getLesson(lessonId).then(data => {
         setLesson(data || null);
+        if (data && data.type === 'test' && activeTab === 'materials') {
+          setActiveTab('students');
+        }
       });
     }
 
     if (lessonId && activeTab === 'students') {
       store.getLessonSubmissions(lessonId).then(subs => setSubmissions(Array.isArray(subs) ? subs : []));
     }
-  }, [lessonId, store]);
+  }, [lessonId, store, activeTab]);
 
   const handleDelete = async () => {
     if (window.confirm('Вы уверены, что хотите удалить этот урок?')) {
@@ -50,15 +53,16 @@ const LessonDetail: React.FC = () => {
           ) : (
             <>
               <h1>{lesson.title}</h1>
-              {lesson.content && <p className="lesson-description">{lesson.content}</p>}
               
               <div className="lesson-detail-tabs">
-                <button 
-                  className={`tab-button ${activeTab === 'materials' ? 'active' : ''}`}
-                  onClick={() => setActiveTab('materials')}
-                >
-                  Материалы
-                </button>
+                {lesson.type !== 'test' && (
+                  <button 
+                    className={`tab-button ${activeTab === 'materials' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('materials')}
+                  >
+                    Материалы
+                  </button>
+                )}
                 <button 
                   className={`tab-button ${activeTab === 'students' ? 'active' : ''}`}
                   onClick={() => setActiveTab('students')}
@@ -105,7 +109,7 @@ const LessonDetail: React.FC = () => {
                   </div>
                 )}
 
-                {activeTab === 'materials' && (
+                {activeTab === 'materials' && lesson.type !== 'test' && (
                   <div className="materials-tab">
                     {lesson.materials.length === 0 ? (
                       <p>Материалов пока нет.</p>

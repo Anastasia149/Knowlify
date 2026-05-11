@@ -10,11 +10,13 @@ class LessonService {
         return newLesson.rows[0];
     }
 
-    async updateLesson(lessonId, title, content, moduleId, imageUrl, type) {
+    async updateLesson(lessonId, title, content, moduleId, imageUrl, type = 'lecture') {
+        console.log("lesson-service.updateLesson called with:", { lessonId, title, content, moduleId, imageUrl, type });
         const updatedLesson = await pool.query(
             `UPDATE lessons SET title = $1, content = $2, module_id = $3, image_url = $4, type = $5 WHERE id = $6 RETURNING *`,
             [title, content, moduleId, imageUrl, type, lessonId]
         );
+        console.log("Updated lesson from DB:", updatedLesson.rows[0]);
         return updatedLesson.rows[0];
     }
 

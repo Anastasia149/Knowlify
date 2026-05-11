@@ -13,10 +13,10 @@ class LessonController {
 
     async updateLesson(req, res, next) {
         try {
-            const { id } = req.params;
+            const { lessonId } = req.params;
             const { title, content, moduleId, imageUrl, type } = req.body;
-            const lessonData = await lessonService.updateLesson(id, title, content, moduleId, imageUrl, type);
-            return res.json(lessonData);
+            const lesson = await lessonService.updateLesson(lessonId, title, content, moduleId, imageUrl, type);
+            return res.json(lesson);
         } catch (e) {
             next(e);
         }
@@ -26,17 +26,6 @@ class LessonController {
         try {
             const { lessonId } = req.params;
             const lesson = await lessonService.getLessonById(lessonId);
-            return res.json(lesson);
-        } catch (e) {
-            next(e);
-        }
-    }
-
-    async updateLesson(req, res, next) {
-        try {
-            const { lessonId } = req.params;
-            const { title, content, moduleId, imageUrl } = req.body;
-            const lesson = await lessonService.updateLesson(lessonId, title, content, moduleId, imageUrl);
             return res.json(lesson);
         } catch (e) {
             next(e);

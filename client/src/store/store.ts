@@ -48,6 +48,8 @@ export default class Store {
     async getLesson(lessonId: string): Promise<Lesson | undefined> {
         try {
             const response = await $api.get<Lesson>(`/lessons/${lessonId}`);
+            console.log("store.getLesson response data:", response.data);
+            console.log("response.data.type:", response.data.type);
             return response.data;
         } catch (e) {
             console.log("FULL ERROR:", e);

@@ -67,6 +67,8 @@ const EditLesson: React.FC = () => {
     if (lessonId) {
       store.getLesson(lessonId).then(data => {
         if (data) {
+          console.log("Fetched lesson data:", data);
+          console.log("Lesson type:", data.type);
           setFields({
             title: data.title,
             content: data.content,
@@ -93,6 +95,10 @@ const EditLesson: React.FC = () => {
       });
     }
   }, [lessonId, store, setFields]);
+
+  useEffect(() => {
+    console.log("Current fields.type:", fields.type);
+  }, [fields.type]);
 
   useEffect(() => {
     const fetchModules = async () => {
