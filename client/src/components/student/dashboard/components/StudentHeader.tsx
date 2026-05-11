@@ -3,15 +3,16 @@ import { Icon } from '@iconify/react';
 import './StudentHeader.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Context } from '../../../../index';
+import { observer } from 'mobx-react-lite';
 
 type Props = {
   name?: string;
 };
 
-const StudentHeader: React.FC<Props> = ({ name }) => {
+const StudentHeader: React.FC<Props> = observer(({ name }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  useContext(Context);
+  const { store } = useContext(Context);
 
   const getTitle = () => {
     const path = location.pathname;
@@ -32,8 +33,8 @@ const StudentHeader: React.FC<Props> = ({ name }) => {
     if (path.startsWith('/student/schedule')) {
       return 'Расписание';
     }
-    if (path.startsWith('/student/settings')) {
-      return 'Настройки';
+    if (path.startsWith('/student/profile')) {
+      return 'Профиль';
     }
     if (path.startsWith('/student/lesson/')) {
       return 'Урок';
@@ -43,7 +44,16 @@ const StudentHeader: React.FC<Props> = ({ name }) => {
 
   const title = getTitle();
 
-  const openSettings = () => navigate('/student/settings');
+  const openProfile = () => navigate('/student/profile');
+  const avatarUrl = store.user?.avatar;
+
+  const onAvatarKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      openProfile();
+    }
+  };
+
   return (
     <div className="student-header">
       <div className="student-header-title">
@@ -62,12 +72,23 @@ const StudentHeader: React.FC<Props> = ({ name }) => {
         <button className="student-icon-btn" aria-label="Корзина">
           <Icon icon="streamline-ultimate:shopping-basket-1" />
         </button>
-        <div className="student-avatar" onClick={openSettings} role="button" aria-label="Открыть настройки" tabIndex={0}>
-          <Icon icon="solar:user-linear" />
+        <div
+          className="student-avatar"
+          onClick={openProfile}
+          onKeyDown={onAvatarKeyDown}
+          role="button"
+          aria-label="Профиль: сменить фото, имя и почту"
+          tabIndex={0}
+        >
+          {avatarUrl ? (
+            <img src={avatarUrl} alt="" className="student-avatar-img" />
+          ) : (
+            <Icon icon="solar:user-linear" />
+          )}
         </div>
       </div>
     </div>
   );
-};
+});
 
 export default StudentHeader;

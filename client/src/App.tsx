@@ -27,6 +27,8 @@ import SearchDetails from './components/student/courses/SearchDetails';
 import StudentCourseDetails from './components/student/courses/StudentCourseDetails';
 import StudentLessonDetail from './components/student/courses/StudentLessonDetail';
 import CreateTest from './components/teacher/courses/CreateTest';
+import StudentProfile from './components/student/profile/StudentProfile';
+import TeacherProfilePage from './components/teacher/profile/TeacherProfilePage';
 
 function App() {
   const {store} = useContext(Context);
@@ -57,6 +59,7 @@ function App() {
             <Route path="courses/:id" element={<SearchDetails />} />
             <Route path="search/:id" element={<SearchDetails />} />
             <Route path="lesson/:lessonId" element={<StudentLessonDetail />} />
+            <Route path="profile" element={<StudentProfile />} />
           </Route>
 
           <Route path="/teacher" element={isTeacher ? <TeacherHome /> : <Navigate to="/" replace />} />
@@ -68,6 +71,7 @@ function App() {
           <Route path="/teacher/course/:courseId/create-test" element={isTeacher ? <CreateTest /> : <Navigate to="/" replace />} />
           <Route path="/teacher/lesson/:lessonId" element={isTeacher ? <LessonDetail /> : <Navigate to="/" replace />} />
           <Route path="/teacher/lesson/:lessonId/edit" element={isTeacher ? <EditLesson /> : <Navigate to="/" replace />} />
+          <Route path="/teacher/profile" element={isTeacher ? <TeacherProfilePage /> : <Navigate to="/" replace />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/register" element={<RegistrationForm />} />
           <Route path="*" element={<NotFound />} />

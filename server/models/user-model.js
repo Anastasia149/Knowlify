@@ -5,8 +5,8 @@ class UserModel {
   async create(name, email, password, activationLink, role = 'student') {
     const result = await pool.query(
       `
-      INSERT INTO users (name, email, password, activation_link, role)
-      VALUES ($1, $2, $3, $4, $5)
+      INSERT INTO users (name, email, password, activation_link, role, avatar)
+      VALUES ($1, $2, $3, $4, $5, NULL)
       RETURNING *
       `,
       [name, email, password, activationLink, role]
@@ -53,6 +53,13 @@ class UserModel {
       `SELECT * FROM users`
     );
     return result.rows;
+  }
+
+  async updateProfile(id, { name, email, avatar, about_me, certificates, career }) {
+    await pool.query(
+      `UPDATE users SET name = $1, email = $2, avatar = $3, about_me = $4, certificates = $5, career = $6 WHERE id = $7`,
+      [name, email, avatar, about_me, certificates, career, id]
+    );
   }
 
 }

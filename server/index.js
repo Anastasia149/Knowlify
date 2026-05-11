@@ -12,7 +12,9 @@ const fileUpload = require('express-fileupload');
 const PORT = process.env.PORT || 5000
 const app = express()
 
-app.use(express.json());
+// Профиль с фото (data URL) и длинными текстами превышает дефолт 100kb
+const jsonBodyLimit = process.env.JSON_BODY_LIMIT || '15mb';
+app.use(express.json({ limit: jsonBodyLimit }));
 app.use(cookieParser());
 app.use(cors({
     origin: process.env.CLIENT_URL,

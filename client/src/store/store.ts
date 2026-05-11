@@ -257,4 +257,30 @@ export default class Store {
             this.setLoading(false);
         }
     }
+
+    async updateUserProfile(payload: {
+        name: string;
+        email: string;
+        avatar: string | null;
+        aboutMe?: string | null;
+        certificates?: string | null;
+        career?: string | null;
+    }) {
+        const body: Record<string, unknown> = {
+            name: payload.name,
+            email: payload.email,
+            avatar: payload.avatar ?? null,
+        };
+        if (payload.aboutMe !== undefined) {
+            body.aboutMe = payload.aboutMe;
+        }
+        if (payload.certificates !== undefined) {
+            body.certificates = payload.certificates;
+        }
+        if (payload.career !== undefined) {
+            body.career = payload.career;
+        }
+        const response = await $api.put<{ user: IUser }>('/users/profile', body);
+        this.setUser(response.data.user);
+    }
 }

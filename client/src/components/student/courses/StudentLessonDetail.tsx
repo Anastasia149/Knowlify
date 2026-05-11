@@ -65,9 +65,7 @@ const StudentLessonDetail: React.FC = () => {
 
   return (
     <div className="student-lesson-container">
-      <button className="back-btn" onClick={() => navigate(-1)}>
-        <Icon icon="mdi:arrow-left" /> Назад к курсу
-      </button>
+     
 
       <div className="lesson-header">
         <div className="lesson-badge">{lesson.type === 'lecture' ? 'Лекция' : 'Задание'}</div>

@@ -97,6 +97,75 @@ class UserService{
       const users = await UserModel.getAllUsers();
       return users;
     }
+
+    mergeOptionalText(currentVal, incoming) {
+      if (incoming === undefined) {
+        return currentVal ?? null;
+      }
+      if (incoming === null || incoming === '') {
+        return null;
+      }
+      return String(incoming);
+    }
+
+    assertAvatarFormat(avatarValue) {
+      if (avatarValue == null || avatarValue === '') {
+        return;
+      }
+      const s = String(avatarValue).trim();
+      if (s.startsWith('http://') || s.startsWith('https://')) {
+        return;
+      }
+      if (s.startsWith('data:')) {
+        const head = s.substring(0, 200);
+        // jpeg/png; опционально charset=... перед base64
+        if (!/^data:image\/(jpe?g|png);(?:charset=[^;]+;)?base64,/i.test(head)) {
+          throw ApiError.BadRequest('Аватар: допустимы только JPG или PNG.');
+        }
+        return;
+      }
+      throw ApiError.BadRequest('Аватар: допустимы только JPG или PNG.');
+    }
+
+    async updateProfile(userId, { name, email, avatar, aboutMe, certificates, career }) {
+      const current = await UserModel.findById(userId);
+      if (!current) {
+        throw ApiError.BadRequest('Пользователь не найден');
+      }
+      if (email !== current.email) {
+        const existing = await UserModel.findByEmail(email);
+        if (existing && String(existing.id) !== String(userId)) {
+          throw ApiError.BadRequest(`Пользователь с почтовым адресом ${email} уже существует`);
+        }
+      }
+      const nextAvatar =
+        avatar === undefined
+          ? (current.avatar ?? null)
+          : (avatar == null || avatar === '' ? null : avatar);
+      if (avatar !== undefined) {
+        this.assertAvatarFormat(nextAvatar);
+      }
+      try {
+        await UserModel.updateProfile(userId, {
+          name,
+          email,
+          avatar: nextAvatar,
+          about_me: this.mergeOptionalText(current.about_me, aboutMe),
+          certificates: this.mergeOptionalText(current.certificates, certificates),
+          career: this.mergeOptionalText(current.career, career),
+        });
+      } catch (e) {
+        console.error('UserModel.updateProfile', e);
+        if (e && e.code === '42703') {
+          throw ApiError.BadRequest(
+            'В базе нет колонок профиля. Выполните скрипт server/sql/users_profile_columns_all.sql (или add_user_avatar.sql и add_teacher_profile_texts.sql).'
+          );
+        }
+        throw new ApiError(500, 'Не удалось сохранить профиль');
+      }
+      const updated = await UserModel.findById(userId);
+      return this.buildUserData(updated);
+    }
 }
 
 module.exports = new UserService();

@@ -7,4 +7,10 @@ export interface IUser{
     role: 'student' | 'teacher';
     name: string;
     courses: ICourse[];
+    /** URL or data URL; optional until loaded from API */
+    avatar?: string | null;
+    /** Необязательно; в основном для преподавателей */
+    aboutMe?: string | null;
+    certificates?: string | null;
+    career?: string | null;
 }

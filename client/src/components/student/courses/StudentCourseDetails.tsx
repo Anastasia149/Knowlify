@@ -48,9 +48,7 @@ const StudentCourseDetails: React.FC = () => {
   return (
     <div className="student-course-details-page">
       <div className="student-course-details-left">
-        <button className="back-btn" onClick={() => navigate('/student/my-courses')}>
-          <Icon icon="mdi:arrow-left" /> Мои курсы
-        </button>
+
         <div className="student-course-panel">
           <h1>{course.title}</h1>
           <p className="student-course-description">{course.description}</p>

@@ -21,6 +21,16 @@ router.post('/logout', userController.logout);
 router.get('/refresh', userController.refresh);
 router.get('/activate/:link', userController.activation);
 router.get('/users', authMiddleware, userController.getUsers);
+router.put('/users/profile',
+    authMiddleware,
+    body('name').isLength({ min: 1, max: 128 }),
+    body('email').isEmail(),
+    body('avatar').optional({ nullable: true }).isString(),
+    body('aboutMe').optional({ nullable: true }).isString().isLength({ max: 12000 }),
+    body('certificates').optional({ nullable: true }).isString().isLength({ max: 12000 }),
+    body('career').optional({ nullable: true }).isString().isLength({ max: 12000 }),
+    userController.updateProfile
+);
 router.post('/courses', authMiddleware, courseController.createCourse);
 router.get('/courses', courseController.getAllPublishedCourses);
 router.get('/courses/:id', courseController.getCourseById);

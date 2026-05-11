@@ -96,6 +96,28 @@ class UserController{
             next(e);
         }
     }
+
+    async updateProfile(req, res, next) {
+        try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return next(ApiError.BadRequest('Ошибка при валидации', errors.array()));
+            }
+            const { name, email, avatar, aboutMe, certificates, career } = req.body;
+            const userId = req.user.id;
+            const user = await userService.updateProfile(userId, {
+                name,
+                email,
+                avatar,
+                aboutMe,
+                certificates,
+                career,
+            });
+            return res.json({ user });
+        } catch (e) {
+            next(e);
+        }
+    }
 }
 
 module.exports = new UserController();
