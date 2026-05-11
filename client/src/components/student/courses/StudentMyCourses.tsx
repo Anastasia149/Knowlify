@@ -36,7 +36,7 @@ const StudentMyCourses: React.FC = () => {
             <Icon icon="mdi:folder-open-outline" className="empty-icon" />
             <h2>У вас пока нет курсов</h2>
             <p>Перейдите в раздел «Поиск», чтобы найти интересные вам курсы!</p>
-            <Link to="/student/courses" className="go-to-search-btn">
+            <Link to="/student/search" className="go-to-search-btn">
               Перейти к поиску
             </Link>
           </div>

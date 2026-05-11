@@ -17,17 +17,26 @@ const StudentHeader: React.FC<Props> = ({ name }) => {
     const path = location.pathname;
     const pathParts = path.split('/').filter(p => p);
 
-    if (path.startsWith('/student/courses') && pathParts.length === 3) {
-      return 'Детали';
+    if (path === '/student') {
+      return 'Главная';
     }
-    if (path.startsWith('/student/courses')) {
-      return 'Поиск';
+    if (path.startsWith('/student/my-courses')) {
+      return 'Мои курсы';
+    }
+    if (path.startsWith('/student/search')) {
+      return 'Поиск курсов';
+    }
+    if (path.startsWith('/student/courses/') && pathParts.length === 3) {
+      return 'Детали курса';
     }
     if (path.startsWith('/student/schedule')) {
       return 'Расписание';
     }
     if (path.startsWith('/student/settings')) {
       return 'Настройки';
+    }
+    if (path.startsWith('/student/lesson/')) {
+      return 'Урок';
     }
     return 'Главная';
   };

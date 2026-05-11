@@ -12,7 +12,7 @@ const primary = [
 
 const courses = [
   { icon: 'mdi:folder-outline', label: 'Мои курсы', path: '/student/my-courses' },
-  { icon: 'hugeicons:internet', label: 'Поиск', path: '/student/courses' },
+  { icon: 'hugeicons:internet', label: 'Поиск', path: '/student/search' },
 ];
 
 const other = [

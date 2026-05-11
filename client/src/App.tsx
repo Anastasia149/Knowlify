@@ -48,6 +48,7 @@ function App() {
             <Route index element={<StudentHome />} />
             <Route path="my-courses" element={<StudentMyCourses />} />
             <Route path="courses" element={<StudentCourses />} />
+            <Route path="search" element={<StudentCourses />} />
             <Route path="schedule" element={<ScheduleHome />} />
             <Route path="settings" element={<StudentSettings />} />
             <Route path="courses/:id" element={<CourseDetails />} />
