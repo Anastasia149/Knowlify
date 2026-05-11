@@ -7,7 +7,7 @@ import TeacherSidebar from '../dashboard/components/TeacherSidebar';
 import TeacherHeader from '../dashboard/components/TeacherHeader';
 import { Icon } from '@iconify/react';
 import '../dashboard/TeacherLayout.css';
-import '../courses/CreateLesson.css';
+import './LessonDetail.css';
 
 const LessonDetail: React.FC = () => {
   const { lessonId } = useParams<{ lessonId: string }>();
@@ -16,16 +16,17 @@ const LessonDetail: React.FC = () => {
 
   const [lesson, setLesson] = useState<Lesson | null>(null);
   const [submissions, setSubmissions] = useState<any[]>([]);
-  const [activeTab, setActiveTab] = useState('students');
+  const [activeTab, setActiveTab] = useState('materials');
 
   useEffect(() => {
     if (lessonId) {
       store.getLesson(lessonId).then(data => {
         setLesson(data || null);
-        if (data?.type === 'assignment') {
-          store.getLessonSubmissions(lessonId).then(subs => setSubmissions(Array.isArray(subs) ? subs : []));
-        }
       });
+    }
+
+    if (lessonId && activeTab === 'students') {
+      store.getLessonSubmissions(lessonId).then(subs => setSubmissions(Array.isArray(subs) ? subs : []));
     }
   }, [lessonId, store]);
 
@@ -49,8 +50,15 @@ const LessonDetail: React.FC = () => {
           ) : (
             <>
               <h1>{lesson.title}</h1>
+              {lesson.content && <p className="lesson-description">{lesson.content}</p>}
               
               <div className="lesson-detail-tabs">
+                <button 
+                  className={`tab-button ${activeTab === 'materials' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('materials')}
+                >
+                  Материалы
+                </button>
                 <button 
                   className={`tab-button ${activeTab === 'students' ? 'active' : ''}`}
                   onClick={() => setActiveTab('students')}
@@ -92,6 +100,23 @@ const LessonDetail: React.FC = () => {
                             </div>
                           ))
                         )}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {activeTab === 'materials' && (
+                  <div className="materials-tab">
+                    {lesson.materials.length === 0 ? (
+                      <p>Материалов пока нет.</p>
+                    ) : (
+                      <div className="materials-grid">
+                        {lesson.materials.map(m => (
+                          <a key={m.id} href={m.file_url} target="_blank" rel="noopener noreferrer" className="material-card">
+                            <Icon icon="mdi:file-document-outline" />
+                            <span>{m.title}</span>
+                          </a>
+                        ))}
                       </div>
                     )}
                   </div>
