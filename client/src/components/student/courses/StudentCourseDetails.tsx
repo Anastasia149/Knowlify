@@ -7,6 +7,7 @@ import './StudentCourseDetails.css';
 import { ISearchDetails } from '../../../models/ICourseDetail';
 import Loader from '../../common/Loader';
 import CourseMetaIcons from '../../common/CourseMetaIcons';
+import { getLessonTypeIcon, getLessonTypeLabel } from '../../../utils/lessonTypeDisplay';
 
 function countLessonsInCourse(course: ISearchDetails): number {
   if (course.lessons_count != null && course.lessons_count >= 0) {
@@ -144,22 +145,18 @@ const StudentCourseDetails: React.FC = () => {
                               onClick={() => navigate(`/student/lesson/${lesson.id}`)}
                             >
                               <div className="lesson-left">
-                                <Icon
-                                  icon={
-                                    lesson.type === 'assignment'
-                                      ? 'mdi:clipboard-text'
-                                      : 'mdi:play-circle-outline'
-                                  }
-                                />
+                                <Icon icon={getLessonTypeIcon(lesson.type)} />
                                 <span>{lesson.title}</span>
                               </div>
                               <div className="lesson-type-badge">
-                                {lesson.type === 'assignment' ? 'Задание' : 'Лекция'}
+                                {getLessonTypeLabel(lesson.type)}
                               </div>
                             </div>
                           ))
                         ) : (
-                          <div className="curriculum-empty">В этом модуле пока нет уроков</div>
+                          <div className="curriculum-empty">
+                            В этом модуле пока нет лекций, заданий и тестов
+                          </div>
                         )}
                       </div>
                     )}
@@ -187,7 +184,9 @@ const StudentCourseDetails: React.FC = () => {
                     className="curriculum-module-chevron"
                     aria-hidden
                   />
-                  <span className="curriculum-module-heading">Уроки</span>
+                  <span className="curriculum-module-heading">
+                    Лекции, задания и тесты
+                  </span>
                 </button>
                 {openModuleKeys.has(STANDALONE_LESSONS_KEY) && (
                   <div className="curriculum-lessons">
@@ -198,17 +197,11 @@ const StudentCourseDetails: React.FC = () => {
                         onClick={() => navigate(`/student/lesson/${lesson.id}`)}
                       >
                         <div className="lesson-left">
-                          <Icon
-                            icon={
-                              lesson.type === 'assignment'
-                                ? 'mdi:clipboard-text'
-                                : 'mdi:play-circle-outline'
-                            }
-                          />
+                          <Icon icon={getLessonTypeIcon(lesson.type)} />
                           <span>{lesson.title}</span>
                         </div>
                         <div className="lesson-type-badge">
-                          {lesson.type === 'assignment' ? 'Задание' : 'Лекция'}
+                          {getLessonTypeLabel(lesson.type)}
                         </div>
                       </div>
                     ))}
@@ -218,7 +211,9 @@ const StudentCourseDetails: React.FC = () => {
             )}
 
             {!hasModules && !hasStandaloneLessons && (
-              <div className="course-details-empty">В этом курсе пока нет уроков или модулей</div>
+              <div className="course-details-empty">
+                В этом курсе пока нет модулей или лекций, заданий и тестов
+              </div>
             )}
           </div>
         </div>

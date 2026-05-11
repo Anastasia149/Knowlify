@@ -7,6 +7,7 @@ import { Icon } from '@iconify/react';
 import $api from '../../../http';
 import './StudentLessonDetail.css';
 import CourseMetaIcons from '../../common/CourseMetaIcons';
+import { getLessonTypeLabel } from '../../../utils/lessonTypeDisplay';
 
 const StudentLessonDetail: React.FC = () => {
   const { lessonId } = useParams<{ lessonId: string }>();
@@ -60,7 +61,7 @@ const StudentLessonDetail: React.FC = () => {
   };
 
   if (!lesson) {
-    return <div className="student-lesson-loading">Загрузка урока...</div>;
+    return <div className="student-lesson-loading">Загрузка…</div>;
   }
 
   return (
@@ -68,7 +69,7 @@ const StudentLessonDetail: React.FC = () => {
      
 
       <div className="lesson-header">
-        <div className="lesson-badge">{lesson.type === 'lecture' ? 'Лекция' : 'Задание'}</div>
+        <div className="lesson-badge">{getLessonTypeLabel(lesson.type)}</div>
         <h1>{lesson.title}</h1>
         <div className="lesson-header-meta">
           <CourseMetaIcons
@@ -88,7 +89,7 @@ const StudentLessonDetail: React.FC = () => {
           
           {lesson.materials.length > 0 && (
             <div className="lesson-materials-section">
-              <h3>Материалы к уроку</h3>
+              <h3>Материалы</h3>
               <div className="materials-grid">
                 {lesson.materials.map(m => (
                   <a key={m.id} href={m.file_url} target="_blank" rel="noopener noreferrer" className="material-card">

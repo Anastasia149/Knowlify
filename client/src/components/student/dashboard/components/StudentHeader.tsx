@@ -1,9 +1,10 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Icon } from '@iconify/react';
 import './StudentHeader.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Context } from '../../../../index';
 import { observer } from 'mobx-react-lite';
+import { getLessonTypeLabel } from '../../../../utils/lessonTypeDisplay';
 
 type Props = {
   name?: string;
@@ -13,6 +14,27 @@ const StudentHeader: React.FC<Props> = observer(({ name }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { store } = useContext(Context);
+
+  const lessonIdMatch = location.pathname.match(/^\/student\/lesson\/(\d+)\/?$/);
+  const lessonIdFromPath = lessonIdMatch?.[1] ?? null;
+  const [lessonTypeHeader, setLessonTypeHeader] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!lessonIdFromPath) {
+      setLessonTypeHeader(null);
+      return;
+    }
+    setLessonTypeHeader(null);
+    let cancelled = false;
+    store.getLesson(lessonIdFromPath).then((l) => {
+      if (!cancelled && l) {
+        setLessonTypeHeader(getLessonTypeLabel(l.type));
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [lessonIdFromPath, store]);
 
   const getTitle = () => {
     const path = location.pathname;
@@ -37,7 +59,7 @@ const StudentHeader: React.FC<Props> = observer(({ name }) => {
       return 'Профиль';
     }
     if (path.startsWith('/student/lesson/')) {
-      return 'Урок';
+      return lessonTypeHeader ?? 'Загрузка…';
     }
     return 'Главная';
   };

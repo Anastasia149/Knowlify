@@ -55,13 +55,53 @@
   margin: 0 0 16px;
 }
 
-/* Ряд метаданных ближе к описанию курса (иконки по центру своих ячеек — как в CourseMetaIcons) */
+/* Метаданные под описанием: в один ряд, узкие прямоугольники (не квадраты) */
 .student-my-courses-page .course-card-body .course-card-description {
   margin-bottom: 1px;
 }
 
 .student-my-courses-page .my-courses-card-meta .course-meta-icons--compact {
   margin-top: 0;
+  width: 100%;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  gap: 5px;
+}
+
+/* Три ячейки одной ширины в ряд, низкие прямоугольники */
+.student-my-courses-page .my-courses-card-meta .course-meta-icons--compact .course-meta-item {
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex: 1 1 0;
+  min-width: 0;
+  width: auto;
+  max-width: none;
+  min-height: 0;
+  height: auto;
+  padding: 4px 6px;
+  gap: 5px;
+  text-align: left;
+  border-radius: 8px;
+}
+
+.student-my-courses-page .my-courses-card-meta .course-meta-icons--compact .course-meta-item-icon {
+  font-size: 17px;
+  flex-shrink: 0;
+}
+
+.student-my-courses-page .my-courses-card-meta .course-meta-icons--compact .course-meta-item-value {
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  flex: 1;
+  min-width: 0;
+  line-height: 1.2;
+}
+
+.student-my-courses-page .my-courses-card-meta .course-meta-icons--compact .course-meta-item:not(:first-child) .course-meta-item-value {
+  white-space: nowrap;
 }
 
 .student-my-courses-page .course-card-body .student-course-progress {
