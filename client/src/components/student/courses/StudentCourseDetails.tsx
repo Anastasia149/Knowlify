@@ -7,7 +7,6 @@ import './StudentCourseDetails.css';
 import { ISearchDetails } from '../../../models/ICourseDetail';
 import Loader from '../../common/Loader';
 import CourseMetaIcons from '../../common/CourseMetaIcons';
-import { getLessonTypeIcon, getLessonTypeLabel } from '../../../utils/lessonTypeDisplay';
 
 function countLessonsInCourse(course: ISearchDetails): number {
   if (course.lessons_count != null && course.lessons_count >= 0) {
@@ -145,11 +144,8 @@ const StudentCourseDetails: React.FC = () => {
                               onClick={() => navigate(`/student/lesson/${lesson.id}`)}
                             >
                               <div className="lesson-left">
-                                <Icon icon={getLessonTypeIcon(lesson.type)} />
+                                <Icon icon="mdi:book-open-outline" aria-hidden />
                                 <span>{lesson.title}</span>
-                              </div>
-                              <div className="lesson-type-badge">
-                                {getLessonTypeLabel(lesson.type)}
                               </div>
                             </div>
                           ))
@@ -197,11 +193,8 @@ const StudentCourseDetails: React.FC = () => {
                         onClick={() => navigate(`/student/lesson/${lesson.id}`)}
                       >
                         <div className="lesson-left">
-                          <Icon icon={getLessonTypeIcon(lesson.type)} />
+                          <Icon icon="mdi:book-open-outline" aria-hidden />
                           <span>{lesson.title}</span>
-                        </div>
-                        <div className="lesson-type-badge">
-                          {getLessonTypeLabel(lesson.type)}
                         </div>
                       </div>
                     ))}

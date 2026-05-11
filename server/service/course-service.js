@@ -52,6 +52,7 @@ class CourseService {
                                     json_build_object(
                                         'id', l.id,
                                         'title', l.title,
+                                        'type', l.type,
                                         'content', l.content,
                                         'image_url', l.image_url,
                                         'materials', (
@@ -75,6 +76,7 @@ class CourseService {
                         json_build_object(
                             'id', l.id,
                             'title', l.title,
+                            'type', l.type,
                             'content', l.content,
                             'image_url', l.image_url,
                             'materials', (
