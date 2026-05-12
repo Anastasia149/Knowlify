@@ -1,5 +1,6 @@
 const pool = require('../db');
 const fileService = require('./file-service');
+const { decodeMultipartFilename } = require('../utils/multipart-text');
 
 class LessonService {
     async createLesson(courseId, moduleId, title, content, imageUrl, type = 'lecture') {
@@ -44,7 +45,7 @@ class LessonService {
 
         const newMaterial = await pool.query(
             `INSERT INTO lesson_materials (lesson_id, type, title, file_url) VALUES ($1, $2, $3, $4) RETURNING *`,
-            [lessonId, type, file.name, fileUrl]
+            [lessonId, type, decodeMultipartFilename(file.name), fileUrl]
         );
         return newMaterial.rows[0];
     }

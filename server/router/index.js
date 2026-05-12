@@ -52,5 +52,6 @@ router.delete('/lessons/:lessonId', authMiddleware, lessonController.deleteLesso
 router.post('/submissions', authMiddleware, submissionController.submitAssignment);
 router.get('/lessons/:lessonId/submissions', authMiddleware, submissionController.getSubmissionsByLesson);
 router.get('/lessons/:lessonId/my-submission', authMiddleware, submissionController.getStudentSubmission);
+router.delete('/lessons/:lessonId/my-submission', authMiddleware, submissionController.deleteMySubmission);
 
 module.exports = router;

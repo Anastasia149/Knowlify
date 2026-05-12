@@ -139,6 +139,16 @@ export default class Store {
         }
     }
 
+    async deleteMySubmission(lessonId: string): Promise<boolean> {
+        try {
+            await $api.delete(`/lessons/${lessonId}/my-submission`);
+            return true;
+        } catch (e) {
+            console.log("FULL ERROR:", e);
+            return false;
+        }
+    }
+
     async getTeacherCourses() {
         try {
             const response = await $api.get<ICourse[]>('/teacher/courses');

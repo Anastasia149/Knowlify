@@ -27,6 +27,14 @@ class SubmissionService {
         );
         return submission.rows[0];
     }
+
+    async deleteStudentSubmission(lessonId, studentId) {
+        const result = await pool.query(
+            `DELETE FROM submissions WHERE lesson_id = $1 AND student_id = $2 RETURNING id`,
+            [lessonId, studentId]
+        );
+        return result.rowCount > 0;
+    }
 }
 
 module.exports = new SubmissionService();

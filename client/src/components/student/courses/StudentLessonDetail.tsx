@@ -6,7 +6,6 @@ import { Lesson } from '../../../models/ICourseDetail';
 import { Icon } from '@iconify/react';
 import $api from '../../../http';
 import './StudentLessonDetail.css';
-import CourseMetaIcons from '../../common/CourseMetaIcons';
 import { getLessonTypeLabel } from '../../../utils/lessonTypeDisplay';
 
 const StudentLessonDetail: React.FC = () => {
@@ -19,6 +18,7 @@ const StudentLessonDetail: React.FC = () => {
   const [link, setLink] = useState('');
   const [file, setFile] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isCancelling, setIsCancelling] = useState(false);
 
   useEffect(() => {
     if (lessonId) {
@@ -51,12 +51,34 @@ const StudentLessonDetail: React.FC = () => {
 
       const newSubmission = await store.submitAssignment(Number(lessonId), submitType, content);
       setSubmission(newSubmission);
-      alert('Задание успешно отправлено!');
+      alert('Работа успешно отправлена!');
     } catch (error) {
       console.error('Submission failed:', error);
-      alert('Ошибка при отправке задания.');
+      alert('Ошибка при отправке работы.');
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleCancelSubmission = async () => {
+    if (!lessonId || isCancelling) return;
+    if (
+      !window.confirm(
+        'Отозвать отправленную работу? После этого можно будет отправить решение снова.'
+      )
+    ) {
+      return;
+    }
+    setIsCancelling(true);
+    try {
+      const ok = await store.deleteMySubmission(lessonId);
+      if (ok) {
+        setSubmission(null);
+      } else {
+        alert('Не удалось отменить отправку. Попробуйте позже.');
+      }
+    } finally {
+      setIsCancelling(false);
     }
   };
 
@@ -64,118 +86,145 @@ const StudentLessonDetail: React.FC = () => {
     return <div className="student-lesson-loading">Загрузка…</div>;
   }
 
+  const isAssignment = lesson.type === 'assignment';
+  const hasMaterials = lesson.materials.length > 0;
+  const showAfterDescription = hasMaterials || isAssignment;
+
   return (
     <div className="student-lesson-container">
-     
+      <div className="lesson-page-grid">
+        <header className="lesson-header">
+          {lesson.type !== 'assignment' && (
+            <div className="lesson-badge">{getLessonTypeLabel(lesson.type)}</div>
+          )}
+          <h1>{lesson.title}</h1>
+        </header>
 
-      <div className="lesson-header">
-        <div className="lesson-badge">{getLessonTypeLabel(lesson.type)}</div>
-        <h1>{lesson.title}</h1>
-        <div className="lesson-header-meta">
-          <CourseMetaIcons
-            variant="compact"
-            omitLessons
-            authorName={lesson.author_name}
-            lessonsCount={0}
-            studentsCount={Number(lesson.students_count) || 0}
-          />
-        </div>
-      </div>
-
-      <div className="lesson-content-grid">
         <div className="lesson-main-content">
-          {lesson.image_url && <img src={lesson.image_url} alt={lesson.title} className="lesson-main-image" />}
           <div className="lesson-text" dangerouslySetInnerHTML={{ __html: lesson.content }} />
-          
-          {lesson.materials.length > 0 && (
-            <div className="lesson-materials-section">
-              <h3>Материалы</h3>
-              <div className="materials-grid">
-                {lesson.materials.map(m => (
-                  <a key={m.id} href={m.file_url} target="_blank" rel="noopener noreferrer" className="material-card">
-                    <Icon icon="mdi:file-document-outline" />
-                    <span>{m.title}</span>
-                  </a>
-                ))}
+        </div>
+
+        {showAfterDescription && (
+          <>
+            <hr className="lesson-divider" />
+            <div className="lesson-footer-plank">
+              <div
+                className={
+                  isAssignment ? 'lesson-after-row lesson-after-row--with-sidebar' : 'lesson-after-row'
+                }
+              >
+              <div className="lesson-after-main">
+                {hasMaterials && (
+                  <div className="lesson-materials-section">
+                    <h3 className="lesson-plank-section-title">Материалы</h3>
+                    <div className="materials-grid">
+                      {lesson.materials.map((m) => (
+                        <a
+                          key={m.id}
+                          href={m.file_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="material-card"
+                        >
+                          <Icon icon="mdi:file-document-outline" />
+                          <span>{m.title}</span>
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {isAssignment && (
+                <aside className="lesson-sidebar">
+                  <div className="submission-card">
+                    <h3 className="lesson-plank-section-title">Ваше решение</h3>
+
+                    {submission ? (
+                      <div className="submission-done">
+                        <div className="submission-status success">
+                          <Icon icon="mdi:check-circle" />
+                          <div>
+                            <p className="status-title">Работа отправлена</p>
+                            <p className="status-date">
+                              {new Date(submission.created_at).toLocaleDateString()}
+                            </p>
+                          </div>
+                        </div>
+                        <button
+                          type="button"
+                          className="submission-cancel-btn"
+                          onClick={handleCancelSubmission}
+                          disabled={isCancelling}
+                        >
+                          {isCancelling ? 'Отмена…' : 'Отменить'}
+                        </button>
+                      </div>
+                    ) : (
+                      <form onSubmit={handleSubmit} className="submission-form">
+                        <div className="submit-type-selector">
+                          <button
+                            type="button"
+                            className={submitType === 'completed' ? 'active' : ''}
+                            onClick={() => setSubmitType('completed')}
+                          >
+                            Отметить
+                          </button>
+                          <button
+                            type="button"
+                            className={submitType === 'link' ? 'active' : ''}
+                            onClick={() => setSubmitType('link')}
+                          >
+                            Ссылка
+                          </button>
+                          <button
+                            type="button"
+                            className={submitType === 'file' ? 'active' : ''}
+                            onClick={() => setSubmitType('file')}
+                          >
+                            Файл
+                          </button>
+                        </div>
+
+                        {submitType === 'link' && (
+                          <input
+                            type="url"
+                            placeholder="Ссылка на работу"
+                            value={link}
+                            onChange={(e) => setLink(e.target.value)}
+                            required
+                            className="submit-input"
+                          />
+                        )}
+
+                        {submitType === 'file' && (
+                          <div className="file-input-wrapper">
+                            <input
+                              type="file"
+                              id="assign-file"
+                              onChange={handleFileChange}
+                              required
+                              className="hidden-file-input"
+                            />
+                            <label htmlFor="assign-file" className="file-label">
+                              <Icon icon="mdi:cloud-upload-outline" />
+                              {file ? file.name : 'Выберите файл'}
+                            </label>
+                          </div>
+                        )}
+
+                        <button type="submit" className="submit-btn" disabled={isSubmitting}>
+                          {isSubmitting ? 'Отправка...' : 'Отправить работу'}
+                        </button>
+                      </form>
+                    )}
+                  </div>
+                </aside>
+              )}
               </div>
             </div>
-          )}
-        </div>
-
-        <div className="lesson-sidebar">
-          {lesson.type === 'assignment' && (
-            <div className="submission-card">
-              <h3>Ваше решение</h3>
-              
-              {submission ? (
-                <div className="submission-status success">
-                  <Icon icon="mdi:check-circle" />
-                  <div>
-                    <p className="status-title">Задание выполнено</p>
-                    <p className="status-date">{new Date(submission.created_at).toLocaleDateString()}</p>
-                  </div>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="submission-form">
-                  <div className="submit-type-selector">
-                    <button 
-                      type="button" 
-                      className={submitType === 'completed' ? 'active' : ''} 
-                      onClick={() => setSubmitType('completed')}
-                    >
-                      Отметить
-                    </button>
-                    <button 
-                      type="button" 
-                      className={submitType === 'link' ? 'active' : ''} 
-                      onClick={() => setSubmitType('link')}
-                    >
-                      Ссылка
-                    </button>
-                    <button 
-                      type="button" 
-                      className={submitType === 'file' ? 'active' : ''} 
-                      onClick={() => setSubmitType('file')}
-                    >
-                      Файл
-                    </button>
-                  </div>
-
-                  {submitType === 'link' && (
-                    <input 
-                      type="url" 
-                      placeholder="Вставьте ссылку на работу" 
-                      value={link}
-                      onChange={(e) => setLink(e.target.value)}
-                      required
-                      className="submit-input"
-                    />
-                  )}
-
-                  {submitType === 'file' && (
-                    <div className="file-input-wrapper">
-                      <input 
-                        type="file" 
-                        id="assign-file" 
-                        onChange={handleFileChange}
-                        required
-                        className="hidden-file-input"
-                      />
-                      <label htmlFor="assign-file" className="file-label">
-                        <Icon icon="mdi:cloud-upload-outline" />
-                        {file ? file.name : 'Выберите файл'}
-                      </label>
-                    </div>
-                  )}
-
-                  <button type="submit" className="submit-btn" disabled={isSubmitting}>
-                    {isSubmitting ? 'Отправка...' : 'Сдать работу'}
-                  </button>
-                </form>
-              )}
-            </div>
-          )}
-        </div>
+          </>
+        )}
       </div>
     </div>
   );

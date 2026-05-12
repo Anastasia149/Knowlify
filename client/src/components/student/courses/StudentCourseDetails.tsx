@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite';
 import { Context } from '../../../index';
 import { Icon } from '@iconify/react';
 import './StudentCourseDetails.css';
-import { ISearchDetails } from '../../../models/ICourseDetail';
+import { ISearchDetails, Lesson } from '../../../models/ICourseDetail';
 import Loader from '../../common/Loader';
 import CourseMetaIcons from '../../common/CourseMetaIcons';
 
@@ -22,6 +22,26 @@ function countLessonsInCourse(course: ISearchDetails): number {
 
 const moduleOpenKey = (moduleId: number) => `m-${moduleId}`;
 const STANDALONE_LESSONS_KEY = 'lessons-standalone';
+
+function CurriculumLessonRow(props: { lesson: Lesson; onNavigate: () => void }) {
+  const { lesson, onNavigate } = props;
+  return (
+    <div className="curriculum-lesson" onClick={onNavigate}>
+      <div className="lesson-left">
+        {lesson.image_url ? (
+          <span className="curriculum-lesson-thumb">
+            <img src={lesson.image_url} alt="" />
+          </span>
+        ) : (
+          <span className="curriculum-lesson-thumb curriculum-lesson-thumb--placeholder" aria-hidden>
+            <Icon icon="mdi:book-open-outline" />
+          </span>
+        )}
+        <span className="curriculum-lesson-title">{lesson.title}</span>
+      </div>
+    </div>
+  );
+}
 
 const StudentCourseDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -138,16 +158,11 @@ const StudentCourseDetails: React.FC = () => {
                       <div className="curriculum-lessons">
                         {module.lessons.length > 0 ? (
                           module.lessons.map((lesson) => (
-                            <div
+                            <CurriculumLessonRow
                               key={lesson.id}
-                              className="curriculum-lesson"
-                              onClick={() => navigate(`/student/lesson/${lesson.id}`)}
-                            >
-                              <div className="lesson-left">
-                                <Icon icon="mdi:book-open-outline" aria-hidden />
-                                <span>{lesson.title}</span>
-                              </div>
-                            </div>
+                              lesson={lesson}
+                              onNavigate={() => navigate(`/student/lesson/${lesson.id}`)}
+                            />
                           ))
                         ) : (
                           <div className="curriculum-empty">
@@ -187,16 +202,11 @@ const StudentCourseDetails: React.FC = () => {
                 {openModuleKeys.has(STANDALONE_LESSONS_KEY) && (
                   <div className="curriculum-lessons">
                     {course.lessons.map((lesson) => (
-                      <div
+                      <CurriculumLessonRow
                         key={lesson.id}
-                        className="curriculum-lesson"
-                        onClick={() => navigate(`/student/lesson/${lesson.id}`)}
-                      >
-                        <div className="lesson-left">
-                          <Icon icon="mdi:book-open-outline" aria-hidden />
-                          <span>{lesson.title}</span>
-                        </div>
-                      </div>
+                        lesson={lesson}
+                        onNavigate={() => navigate(`/student/lesson/${lesson.id}`)}
+                      />
                     ))}
                   </div>
                 )}

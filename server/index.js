@@ -22,7 +22,7 @@ app.use(cors({
 }
 ));
 app.use(express.static('static'));
-app.use(fileUpload({}));
+app.use(fileUpload({ uriDecodeFileNames: true }));
 app.use('/api', router);
 app.use(errorMiddleware);
 
