@@ -11,10 +11,11 @@ class SubmissionService {
 
     async getSubmissionsByLesson(lessonId) {
         const submissions = await pool.query(
-            `SELECT s.*, u.full_name as student_name 
-             FROM submissions s 
-             JOIN users u ON s.student_id = u.id 
-             WHERE s.lesson_id = $1`,
+            `SELECT s.*, COALESCE(NULLIF(TRIM(u.name), ''), u.email, 'Ученик') AS student_name
+             FROM submissions s
+             JOIN users u ON u.id = s.student_id
+             WHERE s.lesson_id = $1
+             ORDER BY s.created_at DESC`,
             [lessonId]
         );
         return submissions.rows;
