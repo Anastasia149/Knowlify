@@ -154,6 +154,18 @@ export default class Store {
         }
     }
 
+    async updateSubmissionReview(
+        submissionId: number,
+        status: 'passed' | 'failed'
+    ) {
+        try {
+            const response = await $api.patch(`/submissions/${submissionId}/review`, { status });
+            return response.data;
+        } catch (e) {
+            console.log("FULL ERROR:", e);
+        }
+    }
+
     async getTeacherCourses() {
         try {
             const response = await $api.get<ICourse[]>('/teacher/courses');

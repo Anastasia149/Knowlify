@@ -237,6 +237,82 @@
   border-radius: 9999px;
 }
 
+.submission-status-pill--submitted {
+  color: #1e40af;
+  background: #dbeafe;
+}
+
+.submission-review {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 16px;
+}
+
+.submission-review-pill {
+  font-size: 13px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 9999px;
+}
+
+.submission-review-pill--pending {
+  color: #92400e;
+  background: #fef3c7;
+}
+
+.submission-review-pill--passed {
+  color: #166534;
+  background: #dcfce7;
+}
+
+.submission-review-pill--failed {
+  color: #991b1b;
+  background: #fee2e2;
+}
+
+.submission-review-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.submission-review-btn {
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  color: #374151;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.submission-review-btn:hover:not(:disabled) {
+  background: #f9fafb;
+}
+
+.submission-review-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.submission-review-btn.passed.active {
+  background: #dcfce7;
+  border-color: #86efac;
+  color: #166534;
+}
+
+.submission-review-btn.failed.active {
+  background: #fee2e2;
+  border-color: #fca5a5;
+  color: #991b1b;
+}
+
 .submission-item-header .submission-date {
   text-align: right;
   margin-left: auto;
@@ -301,6 +377,46 @@
   display: block;
   width: 100%;
   height: auto;
+}
+
+.submissions-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.submissions-section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 16px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.submissions-section-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 10px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #4f46e5;
+  background: #eef2ff;
+  border-radius: 9999px;
+}
+
+.submissions-section-empty {
+  margin: 0;
+  padding: 16px 18px;
+  font-size: 14px;
+  color: #6b7280;
+  background: #f9fafb;
+  border: 1px dashed #e5e7eb;
+  border-radius: 12px;
 }
 
 .submissions-list {

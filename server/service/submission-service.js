@@ -1,4 +1,5 @@
 const pool = require('../db');
+const ApiError = require('../exceptions/api-error');
 
 class SubmissionService {
     async submitAssignment(lessonId, studentId, type, content, items) {
@@ -19,9 +20,7 @@ class SubmissionService {
                 );
 
             if (normalized.length === 0) {
-                const error = new Error('Нет корректных вложений для отправки');
-                error.status = 400;
-                throw error;
+                throw ApiError.BadRequest('Нет корректных вложений для отправки');
             }
 
             storedContent = JSON.stringify({ items: normalized });
@@ -62,6 +61,31 @@ class SubmissionService {
             [lessonId, studentId]
         );
         return result.rowCount > 0;
+    }
+
+    async updateReviewStatus(submissionId, teacherId, status) {
+        const allowed = ['passed', 'failed'];
+        if (!allowed.includes(status)) {
+            throw ApiError.BadRequest('Недопустимый статус проверки');
+        }
+
+        const result = await pool.query(
+            `UPDATE submissions s
+             SET review_status = $1
+             FROM lessons l
+             JOIN courses c ON c.id = l.course_id
+             WHERE s.id = $2
+               AND s.lesson_id = l.id
+               AND c.author_id = $3
+             RETURNING s.*`,
+            [status, submissionId, teacherId]
+        );
+
+        if (result.rowCount === 0) {
+            throw new ApiError(404, 'Работа не найдена или нет доступа');
+        }
+
+        return result.rows[0];
     }
 }
 

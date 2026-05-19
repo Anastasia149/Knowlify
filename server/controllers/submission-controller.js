@@ -52,6 +52,22 @@ class SubmissionController {
             next(e);
         }
     }
+
+    async updateReviewStatus(req, res, next) {
+        try {
+            const { submissionId } = req.params;
+            const { status } = req.body;
+            const teacherId = req.user.id;
+            const submission = await submissionService.updateReviewStatus(
+                submissionId,
+                teacherId,
+                status
+            );
+            return res.json(submission);
+        } catch (e) {
+            next(e);
+        }
+    }
 }
 
 module.exports = new SubmissionController();

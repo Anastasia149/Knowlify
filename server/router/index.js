@@ -53,5 +53,6 @@ router.post('/submissions', authMiddleware, submissionController.submitAssignmen
 router.get('/lessons/:lessonId/submissions', authMiddleware, submissionController.getSubmissionsByLesson);
 router.get('/lessons/:lessonId/my-submission', authMiddleware, submissionController.getStudentSubmission);
 router.delete('/lessons/:lessonId/my-submission', authMiddleware, submissionController.deleteMySubmission);
+router.patch('/submissions/:submissionId/review', authMiddleware, submissionController.updateReviewStatus);
 
 module.exports = router;

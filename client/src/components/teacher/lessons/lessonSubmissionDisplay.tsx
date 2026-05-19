@@ -12,6 +12,7 @@ export type LessonSubmissionRow = {
   type: string;
   content?: string | null;
   created_at: string;
+  review_status?: string | null;
 };
 
 export function TeacherSubmissionMaterial({ s }: { s: LessonSubmissionRow }) {

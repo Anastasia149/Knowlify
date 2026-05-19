@@ -9,6 +9,8 @@ import { Icon } from '@iconify/react';
 import '../dashboard/TeacherLayout.css';
 import '../courses/CreateLesson.css';
 import { TeacherSubmissionMaterial, LessonSubmissionRow } from './lessonSubmissionDisplay';
+import { SubmissionReviewControls } from './SubmissionReviewControls';
+import { partitionSubmissionsByReview } from '../../../utils/submissionReview';
 
 const LessonDetail: React.FC = () => {
   const { lessonId } = useParams<{ lessonId: string }>();
@@ -49,10 +51,70 @@ const LessonDetail: React.FC = () => {
     }
   };
 
-  const studentsTabLabel =
-    lesson?.type === 'assignment' && submissions.length > 0
-      ? `Работы учеников (${submissions.length})`
-      : 'Работы учеников';
+  const handleReviewSubmission = async (
+    submissionId: number,
+    status: 'passed' | 'failed'
+  ): Promise<boolean> => {
+    const updated = await store.updateSubmissionReview(submissionId, status);
+    if (!updated) {
+      alert('Не удалось сохранить оценку. Попробуйте позже.');
+      return false;
+    }
+    setSubmissions((prev) =>
+      prev.map((s) =>
+        s.id === submissionId
+          ? { ...s, review_status: (updated as LessonSubmissionRow).review_status ?? status }
+          : s
+      )
+    );
+    return true;
+  };
+
+  const { pending: pendingSubmissions, reviewed: reviewedSubmissions } =
+    partitionSubmissionsByReview(submissions);
+
+  const renderSubmissionCard = (s: LessonSubmissionRow) => (
+    <div key={s.id} className="submission-item submission-item--card">
+      <div className="submission-item-header">
+        <div className="submission-user">
+          <Icon icon="solar:user-circle-linear" />
+          <span>{s.student_name || 'Ученик'}</span>
+        </div>
+        <span className="submission-status-pill submission-status-pill--submitted">
+          Работа получена
+        </span>
+        <div className="submission-date">
+          {new Date(s.created_at).toLocaleString('ru-RU')}
+        </div>
+      </div>
+      <TeacherSubmissionMaterial s={s} />
+      {lesson?.type === 'assignment' && (
+        <SubmissionReviewControls
+          submissionId={s.id}
+          reviewStatus={s.review_status}
+          onReview={handleReviewSubmission}
+        />
+      )}
+    </div>
+  );
+
+  const renderSubmissionsSection = (
+    title: string,
+    items: LessonSubmissionRow[],
+    emptyText: string
+  ) => (
+    <section className="submissions-section">
+      <h3 className="submissions-section-title">
+        {title}
+        <span className="submissions-section-count">{items.length}</span>
+      </h3>
+      {items.length === 0 ? (
+        <p className="submissions-section-empty">{emptyText}</p>
+      ) : (
+        <div className="submissions-list">{items.map(renderSubmissionCard)}</div>
+      )}
+    </section>
+  );
 
   return (
     <div className="teacher-layout">
@@ -65,7 +127,6 @@ const LessonDetail: React.FC = () => {
           ) : (
             <>
               <h1>{lesson.title}</h1>
-
 
               <div className="lesson-detail-tabs">
                 {lesson.type !== 'test' && (
@@ -82,7 +143,7 @@ const LessonDetail: React.FC = () => {
                   className={`tab-button ${activeTab === 'students' ? 'active' : ''}`}
                   onClick={() => setActiveTab('students')}
                 >
-                  {studentsTabLabel}
+                  Работы учеников
                 </button>
                 <button
                   type="button"
@@ -105,27 +166,22 @@ const LessonDetail: React.FC = () => {
                             ? 'Здесь отображаются ученики, которые отправили работу по этому заданию, и то, что они прикрепили.'
                             : 'Ответы учеников по этому уроку (если предусмотрены).'}
                         </p>
-                        <div className="submissions-list">
-                          {submissions.length === 0 ? (
-                            <p className="info-text">Работ пока никто не отправил.</p>
-                          ) : (
-                            submissions.map((s) => (
-                              <div key={s.id} className="submission-item submission-item--card">
-                                <div className="submission-item-header">
-                                  <div className="submission-user">
-                                    <Icon icon="solar:user-circle-linear" />
-                                    <span>{s.student_name || 'Ученик'}</span>
-                                  </div>
-                                  <span className="submission-status-pill">Сдал работу</span>
-                                  <div className="submission-date">
-                                    {new Date(s.created_at).toLocaleString('ru-RU')}
-                                  </div>
-                                </div>
-                                <TeacherSubmissionMaterial s={s} />
-                              </div>
-                            ))
-                          )}
-                        </div>
+                        {submissions.length === 0 ? (
+                          <p className="info-text">Работ пока никто не отправил.</p>
+                        ) : (
+                          <div className="submissions-sections">
+                            {renderSubmissionsSection(
+                              'На проверку',
+                              pendingSubmissions,
+                              'Нет работ, ожидающих проверки.'
+                            )}
+                            {renderSubmissionsSection(
+                              'Проверено',
+                              reviewedSubmissions,
+                              'Пока нет проверенных работ.'
+                            )}
+                          </div>
+                        )}
                       </>
                     )}
                   </div>

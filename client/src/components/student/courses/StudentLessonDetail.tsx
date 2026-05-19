@@ -13,6 +13,10 @@ import {
   SubmissionItem,
 } from '../../../utils/submissionContent';
 import { SubmissionMaterialList } from '../../common/SubmissionMaterialList';
+import {
+  getReviewStatusLabel,
+  normalizeReviewStatus,
+} from '../../../utils/submissionReview';
 
 type DraftLink = { id: string; kind: 'link'; url: string };
 type DraftFile = { id: string; kind: 'file'; file: File };
@@ -23,6 +27,7 @@ type StudentSubmission = {
   type: string;
   content?: string | null;
   created_at: string;
+  review_status?: string | null;
 };
 
 const StudentLessonDetail: React.FC = () => {
@@ -182,6 +187,9 @@ const StudentLessonDetail: React.FC = () => {
   const submittedItems = submission ? parseSubmissionItems(submission) : [];
   const submittedCompletedOnly =
     submission && isSubmissionCompletedOnly(submission);
+  const reviewStatus = submission
+    ? normalizeReviewStatus(submission.review_status)
+    : 'pending';
 
   return (
     <div className="student-lesson-container">
@@ -249,6 +257,12 @@ const StudentLessonDetail: React.FC = () => {
                               </p>
                             </div>
                           </div>
+
+                          <p
+                            className={`submission-review-badge submission-review-badge--${reviewStatus}`}
+                          >
+                            {getReviewStatusLabel(reviewStatus)}
+                          </p>
 
                           {submittedCompletedOnly ? (
                             <p className="submission-sent-summary">
