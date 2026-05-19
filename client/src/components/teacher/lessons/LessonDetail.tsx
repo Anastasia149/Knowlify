@@ -11,6 +11,7 @@ import '../courses/CreateLesson.css';
 import { TeacherSubmissionMaterial, LessonSubmissionRow } from './lessonSubmissionDisplay';
 import { SubmissionReviewControls } from './SubmissionReviewControls';
 import { partitionSubmissionsByReview } from '../../../utils/submissionReview';
+import { SubmissionOverdueBadge } from '../../common/SubmissionOverdueBadge';
 
 const LessonDetail: React.FC = () => {
   const { lessonId } = useParams<{ lessonId: string }>();
@@ -83,6 +84,7 @@ const LessonDetail: React.FC = () => {
         <span className="submission-status-pill submission-status-pill--submitted">
           Работа получена
         </span>
+        {s.is_overdue && <SubmissionOverdueBadge />}
         <div className="submission-date">
           {new Date(s.created_at).toLocaleString('ru-RU')}
         </div>
@@ -143,7 +145,7 @@ const LessonDetail: React.FC = () => {
                   className={`tab-button ${activeTab === 'students' ? 'active' : ''}`}
                   onClick={() => setActiveTab('students')}
                 >
-                  Работы учеников
+                  {'Работы учеников'}
                 </button>
                 <button
                   type="button"
@@ -234,3 +236,4 @@ const LessonDetail: React.FC = () => {
 };
 
 export default observer(LessonDetail);
+

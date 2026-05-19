@@ -32,14 +32,31 @@ class SubmissionService {
             `INSERT INTO submissions (lesson_id, student_id, type, content) VALUES ($1, $2, $3, $4) RETURNING *`,
             [lessonId, studentId, storedType, storedContent]
         );
-        return newSubmission.rows[0];
+        return this._attachOverdue(newSubmission.rows[0], lessonId);
+    }
+
+    async _attachOverdue(submission, lessonId) {
+        if (!submission) return submission;
+        const lesson = await pool.query(`SELECT deadline FROM lessons WHERE id = $1`, [lessonId]);
+        const deadline = lesson.rows[0]?.deadline;
+        return {
+            ...submission,
+            is_overdue: !!(
+                deadline &&
+                submission.created_at &&
+                new Date(submission.created_at) > new Date(deadline)
+            ),
+        };
     }
 
     async getSubmissionsByLesson(lessonId) {
         const submissions = await pool.query(
-            `SELECT s.*, COALESCE(NULLIF(TRIM(u.name), ''), u.email, 'Ученик') AS student_name
+            `SELECT s.*,
+                    COALESCE(NULLIF(TRIM(u.name), ''), u.email, 'Ученик') AS student_name,
+                    (l.deadline IS NOT NULL AND s.created_at > l.deadline) AS is_overdue
              FROM submissions s
              JOIN users u ON u.id = s.student_id
+             JOIN lessons l ON l.id = s.lesson_id
              WHERE s.lesson_id = $1
              ORDER BY s.created_at DESC`,
             [lessonId]
@@ -49,7 +66,11 @@ class SubmissionService {
 
     async getStudentSubmission(lessonId, studentId) {
         const submission = await pool.query(
-            `SELECT * FROM submissions WHERE lesson_id = $1 AND student_id = $2`,
+            `SELECT s.*,
+                    (l.deadline IS NOT NULL AND s.created_at > l.deadline) AS is_overdue
+             FROM submissions s
+             JOIN lessons l ON l.id = s.lesson_id
+             WHERE s.lesson_id = $1 AND s.student_id = $2`,
             [lessonId, studentId]
         );
         return submission.rows[0];

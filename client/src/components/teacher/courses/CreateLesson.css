@@ -313,6 +313,24 @@
   color: #991b1b;
 }
 
+.form-hint {
+  margin: 8px 0 0;
+  font-size: 13px;
+  color: #6b7280;
+  line-height: 1.45;
+}
+
+.submission-overdue-pill {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #9a3412;
+  background: #ffedd5;
+  padding: 4px 10px;
+  border-radius: 9999px;
+}
+
 .submission-item-header .submission-date {
   text-align: right;
   margin-left: auto;

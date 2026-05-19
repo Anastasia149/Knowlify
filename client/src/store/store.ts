@@ -67,22 +67,53 @@ export default class Store {
         }
     }
 
-    async createLesson(courseId: string, moduleId: string | null, title: string, content: string, imageUrl: string | null, type: string): Promise<Lesson | undefined> {
+    async createLesson(
+        courseId: string,
+        moduleId: string | null,
+        title: string,
+        content: string,
+        imageUrl: string | null,
+        type: string,
+        deadline: string | null = null
+    ): Promise<Lesson | undefined> {
         try {
-            const response = await $api.post<Lesson>(`/lessons`, { courseId, moduleId, title, content, imageUrl, type });
+            const response = await $api.post<Lesson>(`/lessons`, {
+                courseId,
+                moduleId,
+                title,
+                content,
+                imageUrl,
+                type,
+                deadline,
+            });
             return response.data;
         } catch (e) {
             console.log("FULL ERROR:", e);
         }
     }
 
-    async updateLesson(lessonId: string, title: string, content: string, moduleId: string | null, imageUrl: string | null, type: string): Promise<Lesson | undefined> {
+    async updateLesson(
+        lessonId: string,
+        title: string,
+        content: string,
+        moduleId: string | null,
+        imageUrl: string | null,
+        type: string,
+        deadline: string | null = null
+    ): Promise<Lesson | undefined> {
         try {
-            const response = await $api.put<Lesson>(`/lessons/${lessonId}`, { title, content, moduleId, imageUrl, type });
+            const response = await $api.put<Lesson>(`/lessons/${lessonId}`, {
+                title,
+                content,
+                moduleId,
+                imageUrl,
+                type,
+                deadline,
+            });
             return response.data;
         } catch (e) {
             console.log("FULL ERROR:", e);
-        }    
+        }
     }
 
     async uploadLessonMaterial(lessonId: number, file: File): Promise<Material | undefined> {

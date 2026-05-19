@@ -8,6 +8,8 @@ import { Icon } from '@iconify/react';
 import { Module } from '../../../models/ICourseDetail';
 import $api from '../../../http';
 import './CreateTest.css';
+import { LessonDeadlineField } from './LessonDeadlineField';
+import { deadlineLocalToIso } from '../../../utils/lessonDeadline';
 
 interface Option {
   id: string;
@@ -30,6 +32,7 @@ const CreateTest: React.FC = () => {
   const navigate = useNavigate();
 
   const [title, setTitle] = useState('');
+  const [deadline, setDeadline] = useState('');
   const [moduleId, setModuleId] = useState('');
   const [modules, setModules] = useState<Module[]>([]);
   const [questions, setQuestions] = useState<Question[]>([
@@ -164,12 +167,13 @@ const CreateTest: React.FC = () => {
       const testContent = JSON.stringify(questions);
       
       const newLesson = await store.createLesson(
-        courseId, 
-        selectedModuleId, 
-        title, 
-        testContent, 
-        null, 
-        'test'
+        courseId,
+        selectedModuleId,
+        title,
+        testContent,
+        null,
+        'test',
+        deadlineLocalToIso(deadline)
       );
 
       if (newLesson) {
@@ -207,6 +211,7 @@ const CreateTest: React.FC = () => {
                   ))}
                 </select>
               </div>
+              <LessonDeadlineField value={deadline} onChange={setDeadline} />
             </div>
 
             <div className="questions-list">

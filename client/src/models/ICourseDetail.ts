@@ -11,6 +11,7 @@ export interface Lesson {
   content: string;
   image_url: string | null;
   type: 'lecture' | 'assignment' | 'test';
+  deadline?: string | null;
   materials: Material[];
   course_id: number;
   module_id: number | null;

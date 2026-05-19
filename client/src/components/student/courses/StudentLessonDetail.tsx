@@ -17,6 +17,8 @@ import {
   getReviewStatusLabel,
   normalizeReviewStatus,
 } from '../../../utils/submissionReview';
+import { formatDeadline, lessonTypeHasDeadline } from '../../../utils/lessonDeadline';
+import { SubmissionOverdueBadge } from '../../common/SubmissionOverdueBadge';
 
 type DraftLink = { id: string; kind: 'link'; url: string };
 type DraftFile = { id: string; kind: 'file'; file: File };
@@ -28,6 +30,7 @@ type StudentSubmission = {
   content?: string | null;
   created_at: string;
   review_status?: string | null;
+  is_overdue?: boolean;
 };
 
 const StudentLessonDetail: React.FC = () => {
@@ -182,8 +185,9 @@ const StudentLessonDetail: React.FC = () => {
   }
 
   const isAssignment = lesson.type === 'assignment';
+  const hasDeadline = lessonTypeHasDeadline(lesson.type) && !!lesson.deadline;
   const hasMaterials = lesson.materials.length > 0;
-  const showAfterDescription = hasMaterials || isAssignment;
+  const showAfterDescription = hasMaterials || isAssignment || hasDeadline;
   const submittedItems = submission ? parseSubmissionItems(submission) : [];
   const submittedCompletedOnly =
     submission && isSubmissionCompletedOnly(submission);
@@ -220,6 +224,11 @@ const StudentLessonDetail: React.FC = () => {
                 }
               >
                 <div className="lesson-after-main">
+                  {hasDeadline && !isAssignment && (
+                    <p className="lesson-deadline-info lesson-deadline-info--main">
+                      Сдать до: {formatDeadline(lesson.deadline)}
+                    </p>
+                  )}
                   {hasMaterials && (
                     <div className="lesson-materials-section">
                       <h3 className="lesson-plank-section-title">Материалы</h3>
@@ -246,6 +255,12 @@ const StudentLessonDetail: React.FC = () => {
                     <div className="submission-card">
                       <h3 className="lesson-plank-section-title">Ваше решение</h3>
 
+                      {hasDeadline && (
+                        <p className="lesson-deadline-info">
+                          Сдать до: {formatDeadline(lesson.deadline)}
+                        </p>
+                      )}
+
                       {submission ? (
                         <div className="submission-done">
                           <div className="submission-status success">
@@ -263,6 +278,8 @@ const StudentLessonDetail: React.FC = () => {
                           >
                             {getReviewStatusLabel(reviewStatus)}
                           </p>
+
+                          {submission.is_overdue && <SubmissionOverdueBadge />}
 
                           {submittedCompletedOnly ? (
                             <p className="submission-sent-summary">

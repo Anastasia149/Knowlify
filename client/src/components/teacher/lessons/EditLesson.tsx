@@ -11,6 +11,12 @@ import { Icon } from '@iconify/react';
 import '../dashboard/TeacherLayout.css';
 import '../courses/CreateLesson.css';
 import '../courses/CreateTest.css';
+import { LessonDeadlineField } from '../courses/LessonDeadlineField';
+import {
+  deadlineLocalToIso,
+  lessonTypeHasDeadline,
+  toDatetimeLocalValue,
+} from '../../../utils/lessonDeadline';
 
 interface Option {
   id: string;
@@ -38,6 +44,7 @@ const EditLesson: React.FC = () => {
     type: 'lecture',
     image: null as File | null,
     file: null as File | null,
+    deadline: '',
   });
 
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -79,6 +86,7 @@ const EditLesson: React.FC = () => {
             type: data.type || 'lecture',
             image: null,
             file: null,
+            deadline: toDatetimeLocalValue(data.deadline),
           });
           setImagePreview(data.image_url || null);
           setMaterials(data.materials || []);
@@ -329,7 +337,19 @@ const EditLesson: React.FC = () => {
       }
     }
 
-    await store.updateLesson(lessonId, finalTitle, finalContent, finalModuleId, finalImageUrl, fields.type);
+    const deadline = lessonTypeHasDeadline(fields.type)
+      ? deadlineLocalToIso(fields.deadline)
+      : null;
+
+    await store.updateLesson(
+      lessonId,
+      finalTitle,
+      finalContent,
+      finalModuleId,
+      finalImageUrl,
+      fields.type,
+      deadline
+    );
     navigate(`/teacher/lesson/${lessonId}`);
   };
 
@@ -367,6 +387,10 @@ const EditLesson: React.FC = () => {
                     ))}
                   </select>
                 </div>
+                <LessonDeadlineField
+                  value={fields.deadline}
+                  onChange={(value) => setFieldValue('deadline', value)}
+                />
               </div>
 
               <div className="questions-list">
@@ -512,6 +536,13 @@ const EditLesson: React.FC = () => {
                       <button type="button" className="add-module-btn" onClick={() => setIsModalOpen(true)}>Создать модуль</button>
                   </div>
               </div>
+
+              {lessonTypeHasDeadline(fields.type) && (
+                <LessonDeadlineField
+                  value={fields.deadline}
+                  onChange={(value) => setFieldValue('deadline', value)}
+                />
+              )}
 
               <div className="form-group full-width">
                 <label>Материалы урока</label>

@@ -3,8 +3,16 @@ const lessonService = require('../service/lesson-service');
 class LessonController {
     async createLesson(req, res, next) {
         try {
-            const { courseId, moduleId, title, content, imageUrl, type } = req.body;
-            const lessonData = await lessonService.createLesson(courseId, moduleId, title, content, imageUrl, type);
+            const { courseId, moduleId, title, content, imageUrl, type, deadline } = req.body;
+            const lessonData = await lessonService.createLesson(
+                courseId,
+                moduleId,
+                title,
+                content,
+                imageUrl,
+                type,
+                deadline ?? null
+            );
             return res.json(lessonData);
         } catch (e) {
             next(e);
@@ -14,8 +22,16 @@ class LessonController {
     async updateLesson(req, res, next) {
         try {
             const { lessonId } = req.params;
-            const { title, content, moduleId, imageUrl, type } = req.body;
-            const lesson = await lessonService.updateLesson(lessonId, title, content, moduleId, imageUrl, type);
+            const { title, content, moduleId, imageUrl, type, deadline } = req.body;
+            const lesson = await lessonService.updateLesson(
+                lessonId,
+                title,
+                content,
+                moduleId,
+                imageUrl,
+                type,
+                deadline ?? null
+            );
             return res.json(lesson);
         } catch (e) {
             next(e);

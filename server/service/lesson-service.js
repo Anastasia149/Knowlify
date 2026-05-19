@@ -3,19 +3,19 @@ const fileService = require('./file-service');
 const { decodeMultipartFilename } = require('../utils/multipart-text');
 
 class LessonService {
-    async createLesson(courseId, moduleId, title, content, imageUrl, type = 'lecture') {
+    async createLesson(courseId, moduleId, title, content, imageUrl, type = 'lecture', deadline = null) {
         const newLesson = await pool.query(
-            `INSERT INTO lessons (course_id, module_id, title, content, image_url, type) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
-            [courseId, moduleId, title, content, imageUrl, type]
+            `INSERT INTO lessons (course_id, module_id, title, content, image_url, type, deadline) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
+            [courseId, moduleId, title, content, imageUrl, type, deadline]
         );
         return newLesson.rows[0];
     }
 
-    async updateLesson(lessonId, title, content, moduleId, imageUrl, type = 'lecture') {
-        console.log("lesson-service.updateLesson called with:", { lessonId, title, content, moduleId, imageUrl, type });
+    async updateLesson(lessonId, title, content, moduleId, imageUrl, type = 'lecture', deadline = null) {
+        console.log("lesson-service.updateLesson called with:", { lessonId, title, content, moduleId, imageUrl, type, deadline });
         const updatedLesson = await pool.query(
-            `UPDATE lessons SET title = $1, content = $2, module_id = $3, image_url = $4, type = $5 WHERE id = $6 RETURNING *`,
-            [title, content, moduleId, imageUrl, type, lessonId]
+            `UPDATE lessons SET title = $1, content = $2, module_id = $3, image_url = $4, type = $5, deadline = $6 WHERE id = $7 RETURNING *`,
+            [title, content, moduleId, imageUrl, type, deadline, lessonId]
         );
         console.log("Updated lesson from DB:", updatedLesson.rows[0]);
         return updatedLesson.rows[0];

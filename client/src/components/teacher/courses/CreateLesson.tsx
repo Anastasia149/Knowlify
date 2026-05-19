@@ -9,6 +9,8 @@ import { Module } from '../../../models/ICourseDetail';
 import $api from '../../../http';
 import '../dashboard/TeacherLayout.css';
 import './CreateLesson.css';
+import { LessonDeadlineField } from './LessonDeadlineField';
+import { deadlineLocalToIso, lessonTypeHasDeadline } from '../../../utils/lessonDeadline';
 
 const CreateLesson: React.FC = () => {
   const { courseId } = useParams<{ courseId: string }>();
@@ -24,6 +26,7 @@ const CreateLesson: React.FC = () => {
     type: initialType,
     file: null as File | null,
     image: null as File | null,
+    deadline: '',
   });
 
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -141,7 +144,19 @@ const CreateLesson: React.FC = () => {
     }
 
     const moduleId = fields.moduleId === '' ? null : fields.moduleId;
-    const newLesson = await store.createLesson(courseId, moduleId, fields.title, fields.content, imageUrl, fields.type);
+    const deadline = lessonTypeHasDeadline(fields.type)
+      ? deadlineLocalToIso(fields.deadline)
+      : null;
+
+    const newLesson = await store.createLesson(
+      courseId,
+      moduleId,
+      fields.title,
+      fields.content,
+      imageUrl,
+      fields.type,
+      deadline
+    );
 
     if (newLesson && fields.file) {
       await store.uploadLessonMaterial(newLesson.id, fields.file);
@@ -181,6 +196,12 @@ const CreateLesson: React.FC = () => {
                 onChange={handleChange('content')}
               />
             </div>
+            {lessonTypeHasDeadline(fields.type) && (
+              <LessonDeadlineField
+                value={fields.deadline}
+                onChange={(value) => setFieldValue('deadline', value)}
+              />
+            )}
             <div className="form-group">
                 <label htmlFor="module">Модуль</label>
                 <div className="module-select-wrapper">
